@@ -4,6 +4,10 @@ os:
 sudo: required
 language: groovy
 script:
+  - cd products-api
   - gradle check
+  - cd ../purchase-api
+  - gradle check
+  cd ../
 after_success:
   - bash <(curl -s https://codecov.io/bash)
