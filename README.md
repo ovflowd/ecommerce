@@ -1,2 +1,4 @@
-# eCommerce
-:handbag: A simple restful API for Purchases and Products
+![](http://imgur.com/t3teAxi.png)
+<hr>
+
+### :handbag: A simple restful API for Purchases and Products
