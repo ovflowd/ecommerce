@@ -1,0 +1,916 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This describes the full workflow of both Products and Purchases RESTful APIs. <b>eCommerce</b> it's a simple open source software for development and educational tests that describes a full functional (without security schemas)",
+    "version": "1.0.0",
+    "title": "eCommerce",
+    "license": {
+      "name": "MIT",
+      "url": "https://github.com/sant0ro/eCommerce/blob/master/LICENSE"
+    }
+  },
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Products",
+      "description": "Control your stock and products inventary"
+    },
+    {
+      "name": "Purchase",
+      "description": "Purchase items from the products stock"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/product": {
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Add a new Product to the Store",
+        "description": "",
+        "operationId": "addProduct",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Product Object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ProductRegister"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Registered Product with Success"
+                },
+                "productId": {
+                  "type": "number",
+                  "format": "string",
+                  "example": "d867d236f0406e1e44365283714c6206"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid Input",
+            "schema": {
+              "type": "object",
+              "title": "InvalidResponse",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid Input"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "List Products or Search for Products",
+        "description": "",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Search a Product by Name",
+            "type": "string"
+          },
+          {
+            "name": "price",
+            "in": "query",
+            "description": "Search a Product by a certain Price",
+            "type": "number"
+          },
+          {
+            "name": "stock",
+            "in": "query",
+            "description": "Search a Product by the Amount in Stock",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Product"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Update an Existing Product",
+        "description": "",
+        "operationId": "updateProduct",
+        "parameters": [
+          {
+            "name": "Product",
+            "in": "body",
+            "description": "Product object to be Updated",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ProductUpdate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "title": "Success",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Product Edited with Success"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied",
+            "schema": {
+              "type": "object",
+              "title": "InvalidId",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid Product Identifier"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Product Not Found",
+            "schema": {
+              "type": "object",
+              "title": "NotFound",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Product Not Found"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid Input",
+            "schema": {
+              "type": "object",
+              "title": "InvalidInput",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid Input"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Delete a Product",
+        "description": "",
+        "parameters": [
+          {
+            "name": "productId",
+            "required": true,
+            "in": "query",
+            "description": "Specify the Product to be Deleted",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "title": "Success",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Product Deleted with Success"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied",
+            "schema": {
+              "type": "object",
+              "title": "InvalidId",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid Product Identifier"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Product Not Found",
+            "schema": {
+              "type": "object",
+              "title": "NotFound",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Product Not Found"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/stock": {
+      "put": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Update a Stock of a Product",
+        "description": "",
+        "operationId": "updateStock",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Stock Object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/StockUpdate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "title": "Success",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Updated Stock with Success"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied",
+            "schema": {
+              "type": "object",
+              "title": "InvalidId",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid Product Identifier"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Product Not Found",
+            "schema": {
+              "type": "object",
+              "title": "NotFound",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Product Not Found"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid Input",
+            "schema": {
+              "type": "object",
+              "title": "InvalidResponse",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid Input"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "List Stock Updates History",
+        "description": "",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Search a Stock History by Product Name",
+            "type": "string"
+          },
+          {
+            "name": "productId",
+            "in": "query",
+            "description": "Search a Stock History by Product Id",
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Stock"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied",
+            "schema": {
+              "type": "object",
+              "title": "InvalidId",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid Product Identifier"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Product Not Found",
+            "schema": {
+              "type": "object",
+              "title": "NotFound",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Product Not Found"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cart": {
+      "post": {
+        "tags": [
+          "Purchase"
+        ],
+        "summary": "Add a new Cart Invoice",
+        "description": "",
+        "operationId": "addCart",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Cart Object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CartRegister"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Cart Created with Success"
+                },
+                "cartId": {
+                  "type": "number",
+                  "format": "string",
+                  "example": "d867d236f0406e1e44365283714c6206"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid Input",
+            "schema": {
+              "type": "object",
+              "title": "InvalidResponse",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid Input"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Purchase"
+        ],
+        "summary": "List a Cart",
+        "description": "",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Search a Cart by Customer Name",
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "description": "Search a Cart by Customer E-mail",
+            "type": "string"
+          },
+          {
+            "name": "cartId",
+            "in": "query",
+            "description": "Search a Cart by cartId",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Cart"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Purchase"
+        ],
+        "summary": "Delete/Disable a Cart",
+        "description": "",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Delete a Cart by Customer Name",
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "description": "Delete a Cart by Customer E-mail",
+            "type": "string"
+          },
+          {
+            "name": "cartId",
+            "in": "query",
+            "description": "Delete a Cart by the Cart Id",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "title": "Success",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Cart Deleted with Success"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied",
+            "schema": {
+              "type": "object",
+              "title": "InvalidId",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid Cart Identifier"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Cart Not Found",
+            "schema": {
+              "type": "object",
+              "title": "NotFound",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Cart Not Found"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cart/items": {
+      "post": {
+        "tags": [
+          "Purchase"
+        ],
+        "summary": "Add a new Cart Item to a Cart",
+        "description": "",
+        "operationId": "addCartItem",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Item Object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ItemRegister"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Cart Item Added with Success"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid Input",
+            "schema": {
+              "type": "object",
+              "title": "InvalidResponse",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid Input"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Purchase"
+        ],
+        "summary": "Remove a Item from a Cart",
+        "description": "",
+        "parameters": [
+          {
+            "name": "productId",
+            "required": true,
+            "in": "query",
+            "description": "Remove a Item by Product Id",
+            "type": "string"
+          },
+          {
+            "name": "amount",
+            "in": "query",
+            "description": "Specify Amount to Remove",
+            "type": "number",
+            "format": "tinyint",
+            "required": true
+          },
+          {
+            "name": "cartId",
+            "required": true,
+            "in": "query",
+            "description": "Specify the Affected Cart",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "title": "Success",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Item Removed with Success"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied",
+            "schema": {
+              "type": "object",
+              "title": "InvalidId",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid Cart/Product Identifier"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Cart Not Found",
+            "schema": {
+              "type": "object",
+              "title": "NotFound",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Cart Not Found"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cart/checkout": {
+      "post": {
+        "tags": [
+          "Purchase"
+        ],
+        "summary": "Checkout a Cart",
+        "operationId": "cartCheckout",
+        "description": "",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Checkout Object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Checkout"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "title": "Success",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Checkout with Success"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied",
+            "schema": {
+              "type": "object",
+              "title": "InvalidId",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid Cart Identifier"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Cart Not Found",
+            "schema": {
+              "type": "object",
+              "title": "NotFound",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Cart Not Found"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ProductRegister": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Nutella Ice Cream"
+        },
+        "description": {
+          "type": "string",
+          "example": "This is a Nutella Ice Cream Package."
+        },
+        "stock": {
+          "type": "number",
+          "example": 0
+        },
+        "price": {
+          "type": "number",
+          "format": "float",
+          "example": 0
+        }
+      }
+    },
+    "Product": {
+      "type": "object",
+      "properties": {
+        "productId": {
+          "type": "string",
+          "example": "d867d236f0406e1e44365283714c6206"
+        },
+        "name": {
+          "type": "string",
+          "example": "Nutella Ice Cream"
+        },
+        "description": {
+          "type": "string",
+          "example": "This is a Nutella Ice Cream Package."
+        },
+        "stock": {
+          "type": "number",
+          "example": 0
+        },
+        "price": {
+          "type": "number",
+          "format": "float",
+          "example": 0
+        },
+        "addedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "ProductUpdate": {
+      "type": "object",
+      "properties": {
+        "productId": {
+          "type": "string",
+          "example": "d867d236f0406e1e44365283714c6206"
+        },
+        "name": {
+          "type": "string",
+          "example": "Nutella Ice Cream"
+        },
+        "description": {
+          "type": "string",
+          "example": "This is a Nutella Ice Cream Package."
+        },
+        "price": {
+          "type": "number",
+          "format": "float",
+          "example": 0
+        }
+      }
+    },
+    "StockUpdate": {
+      "type": "object",
+      "properties": {
+        "productId": {
+          "type": "string",
+          "example": "d867d236f0406e1e44365283714c6206"
+        },
+        "details": {
+          "type": "string",
+          "example": "Updated Stock because of Cart Checkout"
+        },
+        "amount": {
+          "type": "number",
+          "example": 0
+        }
+      }
+    },
+    "Stock": {
+      "type": "object",
+      "properties": {
+        "stockId": {
+          "type": "string",
+          "example": "b6a43c16d09a81f1f8a29da09d022c5e"
+        },
+        "productId": {
+          "type": "string",
+          "example": "d867d236f0406e1e44365283714c6206"
+        },
+        "details": {
+          "type": "string",
+          "example": "Updated Stock because of Cart Checkout"
+        },
+        "amount": {
+          "type": "number",
+          "example": 0
+        },
+        "addedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "CartRegister": {
+      "type": "object",
+      "properties": {
+        "customer": {
+          "type": "string",
+          "example": "Marcelo Parise"
+        },
+        "email": {
+          "type": "string",
+          "example": "Customer E-mail"
+        }
+      }
+    },
+    "Cart": {
+      "type": "object",
+      "properties": {
+        "cartId": {
+          "type": "string",
+          "example": "45f93c78a2fdd559ced539efcda2ffbb"
+        },
+        "customer": {
+          "type": "string",
+          "example": "Marcelo Parise"
+        },
+        "email": {
+          "type": "string",
+          "example": "Customer E-mail"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Product"
+          }
+        },
+        "addedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "ItemRegister": {
+      "type": "object",
+      "properties": {
+        "cartId": {
+          "type": "string",
+          "example": "45f93c78a2fdd559ced539efcda2ffbb"
+        },
+        "productId": {
+          "type": "string",
+          "example": "d867d236f0406e1e44365283714c6206"
+        },
+        "amount": {
+          "type": "number",
+          "format": "tinyint",
+          "example": 0
+        }
+      }
+    },
+    "Checkout": {
+      "type": "object",
+      "properties": {
+        "cartId": {
+          "type": "string",
+          "example": "45f93c78a2fdd559ced539efcda2ffbb"
+        },
+        "details": {
+          "type": "string",
+          "example": "Confirming Checkout for Marcelo Parise"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about eCommerce",
+    "url": "https://github.com/sant0ro/eCommerce"
+  }
+}
