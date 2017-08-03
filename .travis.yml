@@ -1,0 +1,9 @@
+dist: trusty
+os:
+  - linux
+sudo: required
+language: groovy
+script:
+  - gradle check
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
