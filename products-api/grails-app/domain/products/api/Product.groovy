@@ -9,6 +9,7 @@ package products.api
  * @observation the amount in stock it's picked from the Stock history,
  *  stock amount can't be negative.
  */
+
 class Product {
 
     /* Identifiers */
@@ -17,7 +18,7 @@ class Product {
     /* Attributes */
     String name // The name of the Product
     String description // The description of the Product
-    Integer stock = Stock.findAllWhere(productId: id).amount.sum() as Integer // Quantity on Stock
+    Integer stock //= Stock.findAllWhere(productId: id).amount.sum() as Integer // Quantity on Stock
     Float price // Price of the Product
 
     /* Timestamps */
@@ -36,7 +37,7 @@ class Product {
     static mapping = {
         addedAt defaultValue: new Date().format( 'yyyyMMdd' )
         editedAt defaultValue: new Date().format( 'yyyyMMdd' )
-        description defaultValue: "No Description were added."
+        description defaultValue: ''
         stock defaultValue: 0
         price defultValue: 0.0
     }

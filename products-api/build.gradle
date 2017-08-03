@@ -51,14 +51,10 @@ dependencies {
     profile "org.grails.profiles:rest-api"
     runtime "org.glassfish.web:el-impl:2.1.2-b03"
     runtime "com.h2database:h2"
-    runtime "org.apache.tomcat:tomcat-jdbc"
     testCompile "org.grails:grails-gorm-testing-support"
     testCompile "org.grails.plugins:geb"
     testCompile "org.grails:grails-datastore-rest-client"
     testCompile "org.grails:grails-web-testing-support"
-    testCompile "org.spockframework:spock-core:1.1-groovy-2.4-rc-2"
-    testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
-    testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
 }
 
 bootRun {

@@ -10,6 +10,7 @@ package products.api
  * @observation a Stock entry can have negative or positive entries that means checkout
  *  or entrance of products.
  */
+
 class Stock {
 
     /* Identifiers */
@@ -34,7 +35,7 @@ class Stock {
     static mapping = {
         addedAt defaultValue: new Date().format('yyyyMMdd')
         editedAt defaultValue: new Date().format('yyyyMMdd')
-        details defaultValue: "No Details were added."
+        details defaultValue: ''
         amount defaultValue: 0
     }
 }
