@@ -70,9 +70,11 @@ You also can build from the sources by running the **Grails Console**, just went
 If you want to run it in development scenario, you can also do it by **building** the sources. You have two manner to do it. You can Gradle or directly Grails. Both `products-api` and `purchase-api` comes with Groovy, Grails and Gradle standalone packages. So you can run it without the need of installing they.
 
 **Option #1 - Run by Gradle**
+
 `gradlew bootRun`
 
 **Option #2 - Run bt Grailsw**
+
 `grailsw run-app`
 
 ### Production
