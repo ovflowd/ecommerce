@@ -61,3 +61,12 @@ bootRun {
     jvmArgs('-Dspring.output.ansi.enabled=always')
     addResources = true
 }
+
+jacocoTestReport {
+    executionData integrationTest, test
+    reports {
+        xml.enabled true
+        csv.enabled true
+        html.enabled false
+    }
+}
