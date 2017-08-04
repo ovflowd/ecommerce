@@ -13,32 +13,31 @@ package products.api
 class Product {
 
     /* Identifiers */
-    Long id
+    String id
 
     /* Attributes */
     String name // The name of the Product
     String description // The description of the Product
-    Integer stock //= Stock.findAllWhere(productId: id).amount.sum() as Integer // Quantity on Stock
     Float price // Price of the Product
+    Integer stock = 0 // Amount in Stock
 
     /* Timestamps */
-    Date addedAt // When it was Added
-    Date editedAt // Last time Edited
+    Date addedAt = new Date() // When it was Added
+    Date editedAt = new Date() // Last time Edited
 
     static constraints = {
         name blank:false, nullable: false
         description blank:false, nullable: false
-        stock blank:false, nullable: false
-        price blank:false, nullable: false
-        addedAt blank:true, nullable: true
-        editedAt blank:true, nullable: true
+        price blank:false, nullable: false, notEqual: 0F
+        stock blank: true, nullable: true
+        addedAt blank:false, nullable: false
+        editedAt blank:false, nullable: false
     }
 
     static mapping = {
-        addedAt defaultValue: new Date().format( 'yyyyMMdd' )
-        editedAt defaultValue: new Date().format( 'yyyyMMdd' )
-        description defaultValue: ''
-        stock defaultValue: 0
-        price defultValue: 0.0
+        description defaultValue: 'Product without Description'
+        price defultValue: 1.0
+        id generator: 'uuid'
+        stock insertable: false, updateable: true, defaultValue: 0
     }
 }

@@ -56,7 +56,7 @@
                 "productId": {
                   "type": "number",
                   "format": "string",
-                  "example": "d867d236f0406e1e44365283714c6206"
+                  "example": "1619de8c-5be1-4a5f-9331-bf1668faed7a"
                 }
               }
             }
@@ -255,7 +255,7 @@
       }
     },
     "/product/stock": {
-      "put": {
+      "post": {
         "tags": [
           "Products"
         ],
@@ -269,7 +269,7 @@
             "description": "Stock Object",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/StockUpdate"
+              "$ref": "#/definitions/StockRegister"
             }
           }
         ],
@@ -278,11 +278,15 @@
             "description": "Success",
             "schema": {
               "type": "object",
-              "title": "Success",
               "properties": {
                 "message": {
                   "type": "string",
                   "example": "Updated Stock with Success"
+                },
+                "cartId": {
+                  "type": "number",
+                  "format": "string",
+                  "example": "cdad9d95-bf70-4ea3-8be9-04ff615244ea"
                 }
               }
             }
@@ -419,7 +423,7 @@
                 "cartId": {
                   "type": "number",
                   "format": "string",
-                  "example": "d867d236f0406e1e44365283714c6206"
+                  "example": "4f03e0ca-8cad-4c53-a967-23dc3348e743"
                 }
               }
             }
@@ -741,10 +745,6 @@
           "type": "string",
           "example": "This is a Nutella Ice Cream Package."
         },
-        "stock": {
-          "type": "number",
-          "example": 0
-        },
         "price": {
           "type": "number",
           "format": "float",
@@ -755,9 +755,9 @@
     "Product": {
       "type": "object",
       "properties": {
-        "productId": {
+        "id": {
           "type": "string",
-          "example": "d867d236f0406e1e44365283714c6206"
+          "example": "1619de8c-5be1-4a5f-9331-bf1668faed7a"
         },
         "name": {
           "type": "string",
@@ -768,8 +768,10 @@
           "example": "This is a Nutella Ice Cream Package."
         },
         "stock": {
-          "type": "number",
-          "example": 0
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Stock"
+          }
         },
         "price": {
           "type": "number",
@@ -800,12 +802,12 @@
         }
       }
     },
-    "StockUpdate": {
+    "StockRegister": {
       "type": "object",
       "properties": {
         "productId": {
           "type": "string",
-          "example": "d867d236f0406e1e44365283714c6206"
+          "example": "cdad9d95-bf70-4ea3-8be9-04ff615244ea"
         },
         "details": {
           "type": "string",
@@ -820,13 +822,9 @@
     "Stock": {
       "type": "object",
       "properties": {
-        "stockId": {
+        "id": {
           "type": "string",
-          "example": "b6a43c16d09a81f1f8a29da09d022c5e"
-        },
-        "productId": {
-          "type": "string",
-          "example": "d867d236f0406e1e44365283714c6206"
+          "example": "cdad9d95-bf70-4ea3-8be9-04ff615244ea"
         },
         "details": {
           "type": "string",
@@ -858,7 +856,7 @@
     "Cart": {
       "type": "object",
       "properties": {
-        "cartId": {
+        "id": {
           "type": "string",
           "example": "45f93c78a2fdd559ced539efcda2ffbb"
         },
@@ -887,11 +885,11 @@
       "properties": {
         "cartId": {
           "type": "string",
-          "example": "45f93c78a2fdd559ced539efcda2ffbb"
+          "example": "4f03e0ca-8cad-4c53-a967-23dc3348e743"
         },
         "productId": {
           "type": "string",
-          "example": "d867d236f0406e1e44365283714c6206"
+          "example": "1619de8c-5be1-4a5f-9331-bf1668faed7a"
         },
         "amount": {
           "type": "number",
@@ -905,7 +903,7 @@
       "properties": {
         "cartId": {
           "type": "string",
-          "example": "45f93c78a2fdd559ced539efcda2ffbb"
+          "example": "4f03e0ca-8cad-4c53-a967-23dc3348e743"
         },
         "details": {
           "type": "string",

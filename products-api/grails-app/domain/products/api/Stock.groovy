@@ -14,28 +14,28 @@ package products.api
 class Stock {
 
     /* Identifiers */
-    Long id
+    String id
 
     /* Attributes */
-    Long productId // The Related Product Id
     String details // Details about this Stock Entry
     Integer amount // Amount added or removed in the stock
+    String productId // Product Identifier
 
     /* Timestamps */
-    Date addedAt // When it was Added
-    Date editedAt // Last time Edited
+    Date addedAt = new Date() // When it was Added
+    Date editedAt = new Date() // Last time Edited
 
     static constraints = {
-        productId blank: false, nullable: false
         details blank: true, nullable: false
         addedAt blank: true, nullable: true
         editedAt blank: true, nullable: true
+        productId blank: false, nullable: false
+        amount notEqual: 0
     }
 
     static mapping = {
-        addedAt defaultValue: new Date().format('yyyyMMdd')
-        editedAt defaultValue: new Date().format('yyyyMMdd')
-        details defaultValue: ''
+        details defaultValue: 'Stock Entry without Description.'
         amount defaultValue: 0
+        id generator: 'uuid'
     }
 }
