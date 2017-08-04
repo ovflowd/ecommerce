@@ -113,7 +113,9 @@
             }
           }
         }
-      },
+      }
+    },
+    "/product/{productId}": {
       "put": {
         "tags": [
           "Products"
@@ -122,6 +124,13 @@
         "description": "",
         "operationId": "updateProduct",
         "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "description": "Product Identifier",
+            "type": "string",
+            "required": true
+          },
           {
             "name": "Product",
             "in": "body",
@@ -196,10 +205,10 @@
         "parameters": [
           {
             "name": "productId",
-            "required": true,
-            "in": "query",
-            "description": "Specify the Product to be Deleted",
-            "type": "string"
+            "in": "path",
+            "description": "Product Identifier",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -776,10 +785,6 @@
     "ProductUpdate": {
       "type": "object",
       "properties": {
-        "productId": {
-          "type": "string",
-          "example": "d867d236f0406e1e44365283714c6206"
-        },
         "name": {
           "type": "string",
           "example": "Nutella Ice Cream"
