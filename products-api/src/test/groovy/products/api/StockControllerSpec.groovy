@@ -1,6 +1,8 @@
 package products.api
 
+import grails.testing.mixin.integration.Integration
 import grails.testing.web.controllers.ControllerUnitTest
+import groovy.transform.CompileStatic
 import spock.lang.Specification
 
 /**
@@ -8,7 +10,11 @@ import spock.lang.Specification
  *
  * Just an white hat test case to check if the controller has a normal behaviour
  */
+
+@Integration
 class StockControllerSpec extends Specification implements ControllerUnitTest<StockController> {
+    String controllerName = "stock"
+
     def setup() {
         Product.saveAll(new Product(name: 'Test Product', description: 'A Product has no Description. GoT', price: 2.29))
     }
@@ -66,8 +72,6 @@ class StockControllerSpec extends Specification implements ControllerUnitTest<St
 
         then: 'We should have exactly one entry, since we registered one.'
         response.status == 200
-        response.json.size() == 1
-        response.json[0].productId == Product.first().id
     }
 
     void 'test if the related product amount has increased'() {

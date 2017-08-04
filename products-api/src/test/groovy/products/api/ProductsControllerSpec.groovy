@@ -1,5 +1,6 @@
 package products.api
 
+import grails.testing.mixin.integration.Integration
 import grails.testing.web.controllers.ControllerUnitTest
 import spock.lang.Specification
 
@@ -8,6 +9,8 @@ import spock.lang.Specification
  *
  * Just an white hat test case to check if the controller has a normal behaviour
  */
+
+@Integration
 class ProductsControllerSpec extends Specification implements ControllerUnitTest<ProductsController> {
     void 'test if is possible register a product with a zeroed price'() {
         request.method = 'POST'

@@ -65,6 +65,7 @@ environments:
     test:
         dataSource:
             dbCreate: update
+            dialect: org.hibernate.dialect.H2DialectPatch
             url: jdbc:h2:~/productsTest;MVCC=TRUE
     production:
         dataSource:

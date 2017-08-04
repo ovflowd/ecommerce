@@ -1,6 +1,7 @@
 package products.api
 
 import grails.testing.gorm.DomainUnitTest
+import grails.testing.mixin.integration.Integration
 import spock.lang.Specification
 
 /**
@@ -8,7 +9,19 @@ import spock.lang.Specification
  *
  * Just verifies if the Product Entity has a normal behaviour
  */
+
+@Integration
 class ProductSpec extends Specification implements DomainUnitTest<Product> {
+    void 'test if registering data with normal behaviour works'() {
+        when: 'A real normal product being registered...'
+        Product product = new Product(name: 'A normal and sad product', description: 'We should not care with it.', price: 2.20)
+        product.save()
+
+        then: 'We should succedd in registering it'
+        !product.hasErrors()
+        Product.count() == 1
+    }
+
     void 'test if the given price can be zero'() {
         when: 'A given price being zero'
         Product product = new Product(name: 'A sad product', description: 'We should not care with it.', price: 0)
@@ -29,15 +42,5 @@ class ProductSpec extends Specification implements DomainUnitTest<Product> {
         product.hasErrors()
         product.errors.getFieldError('price')
         Product.count() == 0
-    }
-
-    void 'test if registering data with normal behaviour works'() {
-        when: 'A real normal product being registered...'
-        Product product = new Product(name: 'A normal and sad product', description: 'We should not care with it.', price: 2.20)
-        product.save()
-
-        then: 'We should succedd in registering it'
-        !product.hasErrors()
-        Product.count() == 1
     }
 }
