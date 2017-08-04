@@ -85,14 +85,14 @@ In the Production Environment all eCommerce API's are configured to work with **
 
 * **Username:** commerce
 * **Password:** commerceapi
-* **Database:** productsAPI & purchaseAPI
+* **Database:** productsapi & purchaseapi
 * **Port:** 3306
 
 You can change those credentials in the `application.yaml` file. In production environments **you need import the database schema** before running the software. Both `products-api` and `purchase-api` DDL files are available on [this](sql/) folder.
 
 ### Notes
 
-**Note.:** By default `products-api` runs on port 8090 and `purchase-api` on port 8091.
+**Note.:** By default `products-api` runs on port 8080 and `purchase-api` on port 8090.
 
 **Note.:** In all Development and Test Scenarios, eCommerce uses **H2** in-memory Database.
 
