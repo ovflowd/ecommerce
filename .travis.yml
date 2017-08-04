@@ -3,11 +3,8 @@ os:
   - linux
 sudo: required
 language: groovy
-script:
-  - cd products-api
-  - sudo ./grailsw test-app
-  - cd ../purchase-api
-  - sudo ./grailsw test-app
-  - cd ../
+jdk:
+  - oraclejdk8 
+script: "./travis-build.sh"
 after_success:
   - bash <(curl -s https://codecov.io/bash)
