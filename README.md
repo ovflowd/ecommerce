@@ -39,11 +39,39 @@ If you want to **Contribute** you can submit a Pull Request, remember to READ th
 
 **eCommerce** it's splitted into two standalone RESTful API's, so you can run it on whatever port you want. Installing **eCommerce** it's easy, the tutorial above will explain to you.
 
-**Pre-Requisites**
-- Groovy
-- Java JRE 1.8+
-- 256MB of RAM
-- MySQL
+You can run **eCommerce** in different ways. You can go to the [Releases Page](releases/) and download the source code of the latest release, or a bundled .war or a standalone java application (.jar).
+
+You can attach the .war in WebServers like **Tomcat** using the Management Interface.
+
+If you want run the standalone `.jar` just download it, and open your CMD/Terminal and write:
+
+**If you want RUN the Products API**
+
+`java -jar ecommerce-products-release-XXX.jar`
+
+**If you want RUN the Purchases API**
+
+`java -jar ecommerce-purchase-release-XXX.jar`
+
+You also can build from the sources by running the **Grails Console**, just went to one of the API's folder `purchase-api` or `products-api` and write on your CMD/Terminal the following:
+
+`grailsw assemble`
+
+If you want to run it in development scenario, you can also do it by **building** the sources. You have two manner to do it. You can Gradle or directly Grails. Both `products-api` and `purchase-api` comes with Groovy, Grails and Gradle standalone packages. So you can run it without the need of installing they.
+
+**Option #1 - Run by Gradle**
+`gradlew bootRun`
+
+**Option #2 - Run bt Grailsw**
+`grailsw run-app`
+
+**Note.:** You also can clean the sources and rebuild the sources by running `grailsw clean`
+
+### Running Test Cases
+
+You can easily run the **Test Cases** using the standalone Grails package built-in with both the API's. Just went to the home folder of one of them (`products-api` or `purchase-api`). And write on your CMD/Terminal:
+
+`grailsw test-app`
 
 ### Credits
 
