@@ -76,7 +76,7 @@ Production Environments are focused in being ready. That means, you just need ex
 In the Production Environment all eCommerce API's are configured to work with **MySQL** in a Database called **productsAPI** and to work with a default **username and password** combination:
 
 * **Username:** commerce
-* **Password:** commerce-api
+* **Password:** commerceapi
 * **Database:** productsAPI & purchaseAPI
 * **Port:** 3306
 
