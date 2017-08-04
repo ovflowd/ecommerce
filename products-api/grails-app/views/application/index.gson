@@ -8,11 +8,11 @@ model {
 }
 
 json {
-	message: "Welcome to eCommerce Products API."
+	message "Welcome to eCommerce Products API."
     environment {
-        commerceVersion: grailsApplication.metadata.getApplicationVersion()
-        grailsVersion: GrailsUtil.grailsVersion
-        groovyVersion: GroovySystem.getVersion()
-        jvmVersion: System.getProperty('java.version')
+        commerceVersion grailsApplication.metadata.getApplicationVersion()
+        grailsVersion GrailsUtil.grailsVersion
+        groovyVersion GroovySystem.getVersion()
+        jvmVersion System.getProperty('java.version')
     }
 }
