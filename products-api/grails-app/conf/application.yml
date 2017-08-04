@@ -1,7 +1,40 @@
 ---
-server:
-  port: 8090
+hibernate:
+    cache:
+        queries: false
+        use_second_level_cache: true
+        use_query_cache: false
+        region.factory_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
 
+dataSource:
+    pooled: true
+    jmxExport: true
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+dataSourceProduction:
+    pooled: true
+    jmxExport: true
+    driverClassName: com.mysql.jdbc.Driver
+    dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    username: commerce
+    password: 'commerceapi'
+
+environments:
+    development:
+        dataSource:
+            dbCreate: create-drop
+            url: jdbc:h2:mem:productsDev;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+    test:
+        dataSource:
+            dbCreate: update
+            url: jdbc:h2:mem:productsTest;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+    production:
+        dataSource:
+            dbCreate: none
+            url: dbc:mysql://127.0.0.1:3306/productsapi
+
+---
 ---
 grails:
     profile: rest-api
@@ -10,17 +43,12 @@ grails:
     spring:
         transactionManagement:
             proxies: false
-    gorm:
-        reactor:
-            events: false
 info:
     app:
-        name: 'eCommerce Products API'
-        version: '0.1'
+        name: '@info.app.name@'
+        version: '@info.app.version@'
         grailsVersion: '@info.app.grailsVersion@'
 spring:
-    main:
-        banner-mode: "off"
     groovy:
         template:
             check-template-location: false
@@ -28,11 +56,14 @@ endpoints:
     enabled: false
     jmx:
         enabled: true
+server:
+  port: 8080
 
 ---
 grails:
     mime:
         types:
+            all: '*/*'
             json:
               - application/json
               - text/json
@@ -43,36 +74,3 @@ grails:
         defaultScope: singleton
     converters:
         encoding: UTF-8
-
----
-hibernate:
-    cache:
-        queries: false
-        use_second_level_cache: false
-        use_query_cache: false
-dataSourceDevelopment:
-    pooled: true
-    jmxExport: true
-    driverClassName: org.h2.Driver
-    username: sa
-    password: ''
-dataSourceProduction:
-    pooled: true
-    jmxExport: true
-    driverClassName: com.mysql.jdbc.Driver
-    dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-    username: commerce
-    password: 'commerceapi'
-environments:
-    development:
-        dataSourceDevelopment:
-            dbCreate: create-drop
-            url: jdbc:h2:~/productsDev;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
-    test:
-        dataSourceDevelopment:
-            dbCreate: update
-            url: jdbc:h2:~/productsTest;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
-    production:
-        dataSourceProduction:
-            dbCreate: update
-            url: jdbc:mysql://127.0.0.1:3306/productsapi

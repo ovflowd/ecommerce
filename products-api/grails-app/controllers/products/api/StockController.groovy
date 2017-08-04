@@ -1,5 +1,6 @@
 package products.api
 
+import grails.transaction.Transactional
 import grails.rest.RestfulController
 
 /**
@@ -51,6 +52,7 @@ class StockController extends RestfulController {
      * @return A success message if everything occurs correctly, an error message
      *  if an Invalid Input is given.
      */
+    @Transactional
     def save() {
         // Verifies if the Product Id parameter exists on the Body
         if (!request.JSON.productId) {

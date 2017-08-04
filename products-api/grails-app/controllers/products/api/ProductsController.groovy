@@ -1,5 +1,6 @@
 package products.api
 
+import grails.transaction.Transactional
 import grails.rest.RestfulController
 import org.springframework.validation.BindingResult
 
@@ -52,6 +53,7 @@ class ProductsController extends RestfulController {
      * @return A success message if everything occurs correctly, an error message
      *  if an Invalid Input is given.
      */
+    @Transactional
     def save() {
         def product = Product.create()
 
@@ -88,6 +90,7 @@ class ProductsController extends RestfulController {
      * @return Return severla messages as described on Swagger,
      *  but If any of the validations fail, data won't be changed.
      */
+    @Transactional
     def update() {
         // Check if the Id Parameter is on the Request Path
         if (!params.id) {
@@ -130,6 +133,7 @@ class ProductsController extends RestfulController {
      *
      * @return If the Product exists, remove it, if not respond a Not Found message
      */
+    @Transactional
     def delete() {
         // Check if the Id Parameter is in the Request Path
         if (!params.id) {

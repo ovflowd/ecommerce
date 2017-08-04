@@ -17,7 +17,7 @@ class Stock {
     String id
 
     /* Attributes */
-    String details // Details about this Stock Entry
+    String details = "Stock entry without description." // Details about this Stock Entry
     Integer amount // Amount added or removed in the stock
     String productId // Product Identifier
 
@@ -34,9 +34,7 @@ class Stock {
     }
 
     static mapping = {
-        details defaultValue: 'Stock Entry without Description.'
         amount defaultValue: 1
         id generator: 'uuid'
-        table: 'stock'
     }
 }
