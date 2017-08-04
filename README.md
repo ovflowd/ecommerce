@@ -92,12 +92,12 @@ You can change those credentials in the `application.yaml` file. In production e
 
 **Note.:** You also can clean the sources and rebuild the sources by running `grailsw clean`
 
-### Running Test Cases
+## Running Test Cases
 
 You can easily run the **Test Cases** using the standalone Grails package built-in with both the API's. Just went to the home folder of one of them (`products-api` or `purchase-api`). And write on your CMD/Terminal:
 
 `grailsw test-app`
 
-### Credits
+## Credits
 
 This development/educational scenario was coded and created by [Claudio Santoro](http://santoro.pw) unde the **MIT License**. The objective of this repository it's as practical test of RESTful API's with Java + Groovy.
