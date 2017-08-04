@@ -130,6 +130,7 @@
           <element id="library" level="project" name="Gradle: org.grails:grails-taglib:3.3.0" />
           <element id="library" level="project" name="Gradle: javax.validation:validation-api:1.1.0.Final" />
           <element id="library" level="project" name="Gradle: commons-collections:commons-collections:3.2.2" />
+          <element id="library" level="project" name="Gradle: org.grails:grails-datastore-rest-client:6.1.6.RELEASE" />
         </element>
       </element>
     </root>

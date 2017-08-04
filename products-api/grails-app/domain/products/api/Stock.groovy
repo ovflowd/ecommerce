@@ -35,7 +35,7 @@ class Stock {
 
     static mapping = {
         details defaultValue: 'Stock Entry without Description.'
-        amount defaultValue: 0
+        amount defaultValue: 1
         id generator: 'uuid'
     }
 }

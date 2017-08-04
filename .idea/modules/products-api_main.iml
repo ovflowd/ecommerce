@@ -62,13 +62,14 @@
     <orderEntry type="library" name="Gradle: org.hibernate:hibernate-core:5.1.5.Final" level="project" />
     <orderEntry type="library" name="Gradle: org.grails.plugins:views-json:1.2.3" level="project" />
     <orderEntry type="library" name="Gradle: org.grails.plugins:views-json-templates:1.2.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.grails:grails-datastore-rest-client:6.1.6.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: ch.qos.logback:logback-classic:1.1.11" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:jcl-over-slf4j:1.7.25" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:jul-to-slf4j:1.7.25" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.glassfish.web:el-impl:2.1.2-b03" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:log4j-over-slf4j:1.7.25" level="project" />
-    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot:1.5.4.RELEASE" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.h2database:h2:1.4.195" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot:1.5.4.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.codehaus.groovy:groovy:2.4.11" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.25" level="project" />
     <orderEntry type="library" name="Gradle: org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final" level="project" />
@@ -114,6 +115,7 @@
     <orderEntry type="library" name="Gradle: dom4j:dom4j:1.6.1" level="project" />
     <orderEntry type="library" name="Gradle: org.hibernate.common:hibernate-commons-annotations:5.0.1.Final" level="project" />
     <orderEntry type="library" name="Gradle: org.grails:views-core:1.2.3" level="project" />
+    <orderEntry type="library" name="Gradle: commons-codec:commons-codec:1.10" level="project" />
     <orderEntry type="library" name="Gradle: ch.qos.logback:logback-core:1.1.11" level="project" />
     <orderEntry type="library" name="Gradle: commons-logging:commons-logging:1.2" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-aop:4.3.9.RELEASE" level="project" />
@@ -137,7 +139,6 @@
     <orderEntry type="library" name="Gradle: commons-lang:commons-lang:2.6" level="project" />
     <orderEntry type="library" name="Gradle: org.codehaus.groovy:groovy-json:2.4.11" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-web:4.3.9.RELEASE" level="project" />
-    <orderEntry type="library" name="Gradle: commons-codec:commons-codec:1.10" level="project" />
     <orderEntry type="library" name="Gradle: org.grails:grails-databinding:3.3.0" level="project" />
     <orderEntry type="library" name="Gradle: org.grails:grails-gsp:3.3.0" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-webmvc:4.3.9.RELEASE" level="project" />

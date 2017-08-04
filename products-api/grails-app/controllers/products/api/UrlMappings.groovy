@@ -17,7 +17,7 @@ class UrlMappings {
         // List Stock
         get "/product/stock?"(controller:"stock", action:"index")
         // Index Page
-        get "/"(controller: 'commerce', action:'index')
+        get "/"(controller: 'application', action:'index')
         // Internal Server Error
         "500"(view: '/error')
         // Page{Method} Not Found
