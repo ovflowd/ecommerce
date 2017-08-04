@@ -8,7 +8,7 @@ import org.springframework.validation.BindingResult
  * Manages all operations that happens with Products
  */
 class ProductsController {
-    static responseFormats = ['json']
+    static responseFormats = ['json'], allowedMethods = [index: "GET", save: "POST", update: "PUT"]
 
     /**
      * Index Method
@@ -46,15 +46,18 @@ class ProductsController {
 
         bindData product, request.JSON
 
-        if (product.validate()) {
-            product.save flush: true
-
-            respond(message: 'Product Registered with Success', id: product.id)
-        } else {
+        // Check if the Body has a valid Mapping
+        if (!product.validate()) {
             response.status = 405
 
             respond(message: 'Invalid Input. Check your jSON.')
+
+            return
         }
+
+        product.save flush: true
+
+        respond(message: 'Product Registered with Success', id: product.id)
     }
 
     /**
@@ -66,27 +69,40 @@ class ProductsController {
      *  but If any of the validations fail, data won't be changed.
      */
     def update() {
-        if (params.id) {
-            def product = Product.get(params.id as Serializable)
+        // Check if the Id Parameter is on the Request Path
+        if (!params.id) {
+            response.status = 400
 
-            if (product) {
-                product.properties = request as BindingResult
-
-                if (!product.hasErrors()) {
-                    product.save flush: true
-
-                    respond(message: 'Product Updated with Success')
-                } else {
-                    transactionStatus.setRollbackOnly()
-
-                    respond(message: 'Invalid Input. Check your jSON')
-                }
-            } else {
-                respond(message: 'Product not Found. Ensure that the Identifier it\'s correct.')
-            }
-        } else {
             respond(message: 'Invalid Identifier or no Identifier supplied')
+
+            return
         }
+
+        def product = Product.get(params.id as Serializable)
+
+        // Check if the Product Exists
+        if (!product) {
+            response.status = 404
+
+            respond(message: 'Product not Found. Ensure that the Identifier it\'s correct.')
+
+            return
+        }
+
+        product.properties = request as BindingResult
+
+        // Check if the Update Triggered Any Error
+        if (product.hasErrors()) {
+            response.status = 405
+
+            transactionStatus.setRollbackOnly()
+
+            respond(message: 'Invalid Input. Check your jSON')
+        }
+
+        product.save flush: true
+
+        respond(message: 'Product Updated with Success')
     }
 
     /**
@@ -97,18 +113,28 @@ class ProductsController {
      * @return If the Product exists, remove it, if not respond a Not Found message
      */
     def delete() {
-        if (params.id) {
-            def product = Product.get(params.id as Serializable)
+        // Check if the Id Parameter is in the Request Path
+        if (!params.id) {
+            response.status = 400
 
-            if (product) {
-                product.delete flush: true
-
-                respond(message: 'Product Removed with Success.')
-            } else {
-                respond(message: 'Product not Found. Ensure that the Identifier it\'s correct.')
-            }
-        } else {
             respond(message: 'Invalid Identifier or no Identifier supplied')
+
+            return
         }
+
+        def product = Product.get(params.id as Serializable)
+
+        // Check if the Product exists with the provided Identifier
+        if (!product) {
+            response.status = 404
+
+            respond(message: 'Product not Found. Ensure that the Identifier it\'s correct.')
+
+            return
+        }
+
+        product.delete flush: true
+
+        respond(message: 'Product Removed with Success.')
     }
 }
