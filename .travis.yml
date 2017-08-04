@@ -8,6 +8,6 @@ script:
   - ./grailsw test-app
   - cd ../purchase-api
   - ./grailsw test-app
-  cd ../
+  - cd ../
 after_success:
   - bash <(curl -s https://codecov.io/bash)

@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6d8b4aa3-0d55-4a06-ae85-64e013e4dc3a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/Gradle___products_api___products_api_0_1_war__exploded_.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/Gradle___products_api___products_api_0_1_war__exploded_.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules/products-api_integrationTest.iml" afterPath="$PROJECT_DIR$/.idea/modules/products-api_integrationTest.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/products-api/build.gradle" afterPath="$PROJECT_DIR$/products-api/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/products-api/grails-app/conf/application.yml" afterPath="$PROJECT_DIR$/products-api/grails-app/conf/application.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/products-api/src/test/groovy/products/api/ProductSpec.groovy" afterPath="$PROJECT_DIR$/products-api/src/test/groovy/products/api/ProductSpec.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/products-api/src/test/groovy/products/api/ProductsControllerSpec.groovy" afterPath="$PROJECT_DIR$/products-api/src/test/groovy/products/api/ProductsControllerSpec.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/products-api/src/test/groovy/products/api/StockControllerSpec.groovy" afterPath="$PROJECT_DIR$/products-api/src/test/groovy/products/api/StockControllerSpec.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/products-api/src/test/groovy/products/api/StockSpec.groovy" afterPath="$PROJECT_DIR$/products-api/src/test/groovy/products/api/StockSpec.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.travis.yml" afterPath="$PROJECT_DIR$/.travis.yml" />
     </list>
     <ignored path="$PROJECT_DIR$/products-api/.gradle/" />
     <ignored path="$PROJECT_DIR$/products-api/build/" />
@@ -55,7 +48,18 @@
     </system>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name=".travis.yml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.travis.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" column="4" lean-forward="false" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -1495,7 +1499,6 @@
         <option value="$PROJECT_DIR$/products-api/.gitignore" />
         <option value="$PROJECT_DIR$/products-api/grails-app/controllers/products/api/StockController.groovy" />
         <option value="$PROJECT_DIR$/products-api/grails-app/controllers/products/api/ProductsController.groovy" />
-        <option value="$PROJECT_DIR$/.travis.yml" />
         <option value="$PROJECT_DIR$/products-api/src/test/groovy/products/api/CommerceControllerSpec.groovy" />
         <option value="$PROJECT_DIR$/products-api/grails-app/domain/products/api/Stock.groovy" />
         <option value="$PROJECT_DIR$/products-api/grails-app/conf/spring/resources.groovy" />
@@ -1510,6 +1513,7 @@
         <option value="$PROJECT_DIR$/products-api/src/test/groovy/products/api/StockControllerSpec.groovy" />
         <option value="$PROJECT_DIR$/products-api/src/test/groovy/products/api/StockSpec.groovy" />
         <option value="$PROJECT_DIR$/products-api/build.gradle" />
+        <option value="$PROJECT_DIR$/.travis.yml" />
       </list>
     </option>
   </component>
@@ -1792,15 +1796,16 @@
       <workItem from="1501784853878" duration="78000" />
       <workItem from="1501784966700" duration="6670000" />
       <workItem from="1501800126321" duration="1863000" />
-      <workItem from="1501802038079" duration="25385000" />
+      <workItem from="1501802038079" duration="25469000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33996000" />
+    <option name="totallyTimeSpent" value="34080000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -1822,7 +1827,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5675214" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.8752137" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.8752137" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26096824" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -2279,14 +2284,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.travis.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="19" lean-forward="true" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/products-api/src/test/groovy/products/api/CommerceControllerSpec.groovy">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -2476,6 +2473,14 @@
           <folding>
             <element signature="e#22#73#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.travis.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="4" lean-forward="false" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
+          <folding />
         </state>
       </provider>
     </entry>
