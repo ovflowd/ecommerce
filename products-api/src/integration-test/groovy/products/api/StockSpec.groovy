@@ -1,7 +1,8 @@
 package products.api
 
 import grails.testing.mixin.integration.Integration
-import spock.lang.Specification
+import grails.transaction.*
+import spock.lang.*
 
 /**
  * Stock Specification Test
@@ -10,7 +11,11 @@ import spock.lang.Specification
  */
 
 @Integration
+@Rollback
 class StockSpec extends Specification {
+    def setup() {}
+
+    def cleanup() {}
 
     void 'test if the default amount is applied when not providing one'() {
         when: 'Not providing an amount...'

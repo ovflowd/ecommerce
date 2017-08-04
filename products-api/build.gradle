@@ -15,10 +15,8 @@ group "products.api"
 
 apply plugin:"eclipse"
 apply plugin:"idea"
-apply plugin:"war"
 apply plugin:"org.grails.grails-web"
 apply plugin:"org.grails.plugins.views-json"
-apply plugin: "jacoco"
 
 repositories {
     mavenLocal()
@@ -47,16 +45,18 @@ dependencies {
     compile "org.hibernate:hibernate-core:5.1.5.Final"
     compile "org.grails.plugins:views-json"
     compile "org.grails.plugins:views-json-templates"
-    compile 'org.grails:grails-datastore-rest-client'
     console "org.grails:grails-console"
     profile "org.grails.profiles:rest-api"
+    runtime 'mysql:mysql-connector-java:5.1.29'
     runtime "org.glassfish.web:el-impl:2.1.2-b03"
     runtime "com.h2database:h2"
+    runtime "org.apache.tomcat:tomcat-jdbc"
     testCompile "org.grails:grails-gorm-testing-support"
     testCompile "org.grails.plugins:geb"
     testCompile "org.grails:grails-datastore-rest-client"
     testCompile "org.grails:grails-web-testing-support"
-
+    testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
+    testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
 }
 
 bootRun {
@@ -64,11 +64,6 @@ bootRun {
     addResources = true
 }
 
-jacocoTestReport {
-    executionData integrationTest, test
-    reports {
-        xml.enabled true
-        csv.enabled true
-        html.enabled false
-    }
+springBoot {
+    executable = true
 }

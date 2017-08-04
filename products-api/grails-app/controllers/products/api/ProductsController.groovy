@@ -1,5 +1,6 @@
 package products.api
 
+import grails.rest.RestfulController
 import org.springframework.validation.BindingResult
 
 /**
@@ -7,8 +8,18 @@ import org.springframework.validation.BindingResult
  *
  * Manages all operations that happens with Products
  */
-class ProductsController {
+
+class ProductsController extends RestfulController {
     static responseFormats = ['json'], allowedMethods = [index: "GET", save: "POST", update: "PUT"]
+
+    /**
+     * Instantiates the Restful Controller
+     *
+     * @see Product
+     */
+    ProductsController() {
+        super(Product)
+    }
 
     /**
      * Index Method
@@ -43,6 +54,15 @@ class ProductsController {
      */
     def save() {
         def product = Product.create()
+
+        // Check if either price property exists and is a valid float
+        if(!request.JSON.price || (request.JSON.price % 1) != 0) {
+            response.status = 405
+
+            respond(message: 'Invalid Input. Price isn\'t a valid float number.')
+
+            return
+        }
 
         bindData product, request.JSON
 
@@ -94,8 +114,6 @@ class ProductsController {
         // Check if the Update Triggered Any Error
         if (product.hasErrors()) {
             response.status = 405
-
-            transactionStatus.setRollbackOnly()
 
             respond(message: 'Invalid Input. Check your jSON')
         }

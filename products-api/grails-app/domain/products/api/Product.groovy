@@ -39,5 +39,6 @@ class Product {
         price defultValue: 1.0
         id generator: 'uuid'
         stock insertable: false, updateable: true, defaultValue: 0
+        table: 'product'
     }
 }

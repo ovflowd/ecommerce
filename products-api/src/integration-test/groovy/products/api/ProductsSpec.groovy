@@ -1,17 +1,16 @@
 package products.api
 
-import grails.testing.gorm.DomainUnitTest
 import grails.testing.mixin.integration.Integration
-import spock.lang.Specification
-
-/**
- * Product Specification Test
- *
- * Just verifies if the Product Entity has a normal behaviour
- */
+import grails.transaction.*
+import spock.lang.*
 
 @Integration
-class ProductSpec extends Specification implements DomainUnitTest<Product> {
+@Rollback
+class ProductsSpec extends Specification {
+    def setup() {}
+
+    def cleanup() {}
+
     void 'test if registering data with normal behaviour works'() {
         when: 'A real normal product being registered...'
         Product product = new Product(name: 'A normal and sad product', description: 'We should not care with it.', price: 2.20)

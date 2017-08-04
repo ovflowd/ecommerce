@@ -2,11 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/products-api/products-api.iml" filepath="$PROJECT_DIR$/products-api/products-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/products-api_integrationTest.iml" filepath="$PROJECT_DIR$/.idea/modules/products-api_integrationTest.iml" group="products-api" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/products-api_main.iml" filepath="$PROJECT_DIR$/.idea/modules/products-api_main.iml" group="products-api" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/products-api_test.iml" filepath="$PROJECT_DIR$/.idea/modules/products-api_test.iml" group="products-api" />
-      <module fileurl="file://$PROJECT_DIR$/purchase-api/purchase-api.iml" filepath="$PROJECT_DIR$/purchase-api/purchase-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/purchase-api_integrationTest.iml" filepath="$PROJECT_DIR$/.idea/modules/purchase-api_integrationTest.iml" group="purchase-api" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/purchase-api_main.iml" filepath="$PROJECT_DIR$/.idea/modules/purchase-api_main.iml" group="purchase-api" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/purchase-api_test.iml" filepath="$PROJECT_DIR$/.idea/modules/purchase-api_test.iml" group="purchase-api" />
     </modules>
   </component>
 </project>

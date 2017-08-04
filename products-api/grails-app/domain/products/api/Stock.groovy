@@ -37,5 +37,6 @@ class Stock {
         details defaultValue: 'Stock Entry without Description.'
         amount defaultValue: 1
         id generator: 'uuid'
+        table: 'stock'
     }
 }

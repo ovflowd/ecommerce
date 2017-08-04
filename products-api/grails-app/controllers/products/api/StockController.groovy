@@ -1,7 +1,24 @@
 package products.api
 
-class StockController {
+import grails.rest.RestfulController
+
+/**
+ * Stock Controller
+ *
+ * Manages all operations that happens with Stock Entries
+ */
+
+class StockController extends RestfulController {
     static responseFormats = ['json'], allowedMethods = [index: "GET", save: "POST"]
+
+    /**
+     * Instantiates the Restful Controller
+     *
+     * @see Product
+     */
+    StockController() {
+        super(Stock)
+    }
 
     /**
      * Index Method

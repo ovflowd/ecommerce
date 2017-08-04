@@ -16,7 +16,7 @@ grails:
 info:
     app:
         name: 'eCommerce Products API'
-        version: '1.0'
+        version: '0.1'
         grailsVersion: '@info.app.grailsVersion@'
 spring:
     main:
@@ -50,24 +50,29 @@ hibernate:
         queries: false
         use_second_level_cache: false
         use_query_cache: false
-dataSource:
+dataSourceDevelopment:
     pooled: true
     jmxExport: true
     driverClassName: org.h2.Driver
     username: sa
     password: ''
-
+dataSourceProduction:
+    pooled: true
+    jmxExport: true
+    driverClassName: com.mysql.jdbc.Driver
+    dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    username: commerce
+    password: 'commerceapi'
 environments:
     development:
-        dataSource:
+        dataSourceDevelopment:
             dbCreate: create-drop
-            url: jdbc:h2:~/productsDev;MVCC=TRUE
+            url: jdbc:h2:~/productsDev;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
     test:
-        dataSource:
+        dataSourceDevelopment:
             dbCreate: update
-            dialect: org.hibernate.dialect.H2DialectPatch
-            url: jdbc:h2:~/productsTest;MVCC=TRUE
+            url: jdbc:h2:~/productsTest;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
     production:
-        dataSource:
+        dataSourceProduction:
             dbCreate: update
-            url: jdbc:h2:./productsDatabase;MVCC=TRUE
+            url: jdbc:mysql://127.0.0.1:3306/productsapi

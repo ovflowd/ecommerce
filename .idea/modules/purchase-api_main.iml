@@ -1,42 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id="products-api:main" external.linked.project.path="$MODULE_DIR$/../../products-api" external.root.project.path="$MODULE_DIR$/../../products-api" external.system.id="GRADLE" external.system.module.group="products.api" external.system.module.type="sourceSet" external.system.module.version="0.1" type="JAVA_MODULE" version="4">
+<module external.linked.project.id="purchase-api:main" external.linked.project.path="$MODULE_DIR$/../../purchase-api" external.root.project.path="$MODULE_DIR$/../../purchase-api" external.system.id="GRADLE" external.system.module.group="purchase.api" external.system.module.type="sourceSet" external.system.module.version="0.1" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="Spring" name="Spring">
       <configuration />
     </facet>
+    <facet type="web" name="Web Gradle : purchase-api-0.1.war">
+      <configuration>
+        <webroots>
+          <root url="file://E:\GitHub\eCommerce\purchase-api\src\main\webapp" relative="/" />
+        </webroots>
+        <sourceRoots />
+      </configuration>
+    </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
-    <output url="file://$MODULE_DIR$/../../products-api/out/production/classes" />
+    <output url="file://$MODULE_DIR$/../../purchase-api/out/production/classes" />
     <exclude-output />
-    <content url="file://$MODULE_DIR$/../../products-api/grails-app">
-      <sourceFolder url="file://$MODULE_DIR$/../../products-api/grails-app/controllers" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../../products-api/grails-app/domain" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../../products-api/grails-app/init" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../../products-api/grails-app/services" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../../products-api/grails-app/utils" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../../products-api/grails-app/conf" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../../products-api/grails-app/i18n" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../../products-api/grails-app/views" type="java-resource" />
+    <content url="file://$MODULE_DIR$/../../purchase-api/grails-app">
+      <sourceFolder url="file://$MODULE_DIR$/../../purchase-api/grails-app/controllers" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../purchase-api/grails-app/domain" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../purchase-api/grails-app/init" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../purchase-api/grails-app/services" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../purchase-api/grails-app/utils" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../purchase-api/grails-app/conf" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../../purchase-api/grails-app/i18n" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../../purchase-api/grails-app/views" type="java-resource" />
     </content>
-    <content url="file://$MODULE_DIR$/../../products-api/src/main">
-      <sourceFolder url="file://$MODULE_DIR$/../../products-api/src/main/groovy" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../../products-api/src/main/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../../products-api/src/main/resources" type="java-resource" />
+    <content url="file://$MODULE_DIR$/../../purchase-api/src/main">
+      <sourceFolder url="file://$MODULE_DIR$/../../purchase-api/src/main/groovy" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../purchase-api/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../purchase-api/src/main/resources" type="java-resource" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-logging:1.5.4.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-autoconfigure:1.5.4.RELEASE" level="project" />
-    <orderEntry type="library" name="Gradle: org.grails:grails-core:3.3.0" level="project" />
     <orderEntry type="module-library" scope="RUNTIME">
       <library>
         <CLASSES>
-          <root url="file://$MODULE_DIR$/../../products-api/build/gson-classes/main" />
+          <root url="file://$MODULE_DIR$/../../purchase-api/build/gson-classes/main" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="Gradle: org.grails:grails-core:3.3.0" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-actuator:1.5.4.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-tomcat:1.5.4.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.grails:grails-plugin-url-mappings:3.3.0" level="project" />
@@ -58,13 +66,12 @@
     <orderEntry type="library" name="Gradle: ch.qos.logback:logback-classic:1.1.11" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:jcl-over-slf4j:1.7.25" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:jul-to-slf4j:1.7.25" level="project" />
-    <orderEntry type="library" name="Gradle: org.slf4j:log4j-over-slf4j:1.7.25" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: mysql:mysql-connector-java:5.1.29" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.glassfish.web:el-impl:2.1.2-b03" level="project" />
-    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot:1.5.4.RELEASE" level="project" />
+    <orderEntry type="library" name="Gradle: org.slf4j:log4j-over-slf4j:1.7.25" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.h2database:h2:1.4.195" level="project" />
-    <orderEntry type="library" name="Gradle: org.codehaus.groovy:groovy:2.4.11" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot:1.5.4.RELEASE" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.tomcat:tomcat-jdbc:8.5.15" level="project" />
+    <orderEntry type="library" name="Gradle: org.codehaus.groovy:groovy:2.4.11" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.25" level="project" />
     <orderEntry type="library" name="Gradle: org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final" level="project" />
     <orderEntry type="library" name="Gradle: com.googlecode.concurrentlinkedhashmap:concurrentlinkedhashmap-lru:1.4.2" level="project" />
@@ -116,8 +123,8 @@
     <orderEntry type="library" name="Gradle: org.codehaus.groovy:groovy-xml:2.4.11" level="project" />
     <orderEntry type="library" name="Gradle: org.codehaus.groovy:groovy-templates:2.4.11" level="project" />
     <orderEntry type="library" name="Gradle: org.yaml:snakeyaml:1.17" level="project" />
-    <orderEntry type="library" name="Gradle: javax.transaction:jta:1.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: javax.el:el-api:2.1.2-b03" level="project" />
+    <orderEntry type="library" name="Gradle: javax.transaction:jta:1.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.tomcat:tomcat-juli:8.5.15" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.8.8" level="project" />
     <orderEntry type="library" name="Gradle: org.grails:grails-web-databinding:3.3.0" level="project" />
