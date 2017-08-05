@@ -1,7 +1,6 @@
 package products.api
 
 import grails.transaction.Transactional
-import grails.rest.RestfulController
 import org.springframework.validation.BindingResult
 
 /**
@@ -10,17 +9,8 @@ import org.springframework.validation.BindingResult
  * Manages all operations that happens with Products
  */
 
-class ProductsController extends RestfulController {
+class ProductsController {
     static responseFormats = ['json'], allowedMethods = [index: "GET", save: "POST", update: "PUT"]
-
-    /**
-     * Instantiates the Restful Controller
-     *
-     * @see Product
-     */
-    ProductsController() {
-        super(Product)
-    }
 
     /**
      * Index Method
