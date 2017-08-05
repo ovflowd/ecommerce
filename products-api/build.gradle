@@ -20,7 +20,7 @@ group "products.api"
 
 apply plugin: "eclipse"
 apply plugin: "idea"
-apply plugin: "war"
+//apply plugin: "war" We want Standalone Java Application
 apply plugin: "org.grails.grails-web"
 apply plugin: "org.grails.plugins.views-json"
 apply plugin: "jacoco"
