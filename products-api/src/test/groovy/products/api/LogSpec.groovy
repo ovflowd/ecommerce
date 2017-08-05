@@ -3,20 +3,13 @@ package products.api
 import grails.test.mixin.TestFor
 import spock.lang.Specification
 
-/**
- * See the API for {@link grails.test.mixin.domain.DomainClassUnitTestMixin} for usage instructions
- */
 @TestFor(Log)
 class LogSpec extends Specification {
+    def 'test if a normal log passes on the validation'() {
+        when:
+        def log = new Log(relatedElement: 'some-element', relatedTable: 'product', details: 'Some shit happened here.').save()
 
-    def setup() {
-    }
-
-    def cleanup() {
-    }
-
-    void "test something"() {
-        expect:"fix me"
-            true == false
+        then:
+        log
     }
 }
