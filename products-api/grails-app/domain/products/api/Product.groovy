@@ -31,7 +31,7 @@ class Product {
     static constraints = {
         name blank:false, nullable: false
         description blank:false, nullable: false
-        price blank:false, nullable: false, notEqual: 0F
+        price blank:false, nullable: false, notEqual: 0F, scale: 2, min: 0F
         stock blank: true, nullable: true
         addedAt blank:false, nullable: false
         editedAt blank:false, nullable: false
