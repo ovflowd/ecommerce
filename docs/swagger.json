@@ -84,6 +84,12 @@
         "description": "",
         "parameters": [
           {
+            "name": "id",
+            "in": "query",
+            "description": "Search a Product by Identifier",
+            "type": "string"
+          },
+          {
             "name": "name",
             "in": "query",
             "description": "Search a Product by Name",
