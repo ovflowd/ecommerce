@@ -9,12 +9,12 @@
 
 | Feature  |  Coded?       | Description  |
 |----------|:-------------:|:-------------|
-| Add a Product | &#10008; | Ability of Add a Product on the System |
-| List Products | &#10008; | Ability of List Products |
-| Edit a Product | &#10008; | Ability of Edit a Product |
-| Delete a Product | &#10008; | Ability of Delete a Product |
-| Stock | &#10008; | Ability of Update the Stock |
-| Stock History | &#10008; | Ability to see the Stock History |
+| Add a Product | &#10004; | Ability of Add a Product on the System |
+| List Products | &#10004; | Ability of List Products |
+| Edit a Product | &#10004; | Ability of Edit a Product |
+| Delete a Product | &#10004; | Ability of Delete a Product |
+| Stock | &#10004; | Ability of Update the Stock |
+| Stock History | &#10004; | Ability to see the Stock History |
 
 <b>Purchase Features</b>
 
