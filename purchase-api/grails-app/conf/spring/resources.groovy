@@ -1,3 +1,7 @@
-// Place your Spring DSL code here
+package spring
+
+import grails.plugins.rest.client.RestBuilder
+
 beans = {
+    rest(RestBuilder)
 }

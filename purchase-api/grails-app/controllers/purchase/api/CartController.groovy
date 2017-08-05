@@ -1,7 +1,9 @@
 package purchase.api
 
 import grails.converters.JSON
+import grails.plugins.rest.client.RestBuilder
 import grails.transaction.Transactional
+import org.grails.web.json.JSONObject
 
 /**
  * Cart Controller
@@ -11,6 +13,11 @@ import grails.transaction.Transactional
 class CartController {
     static responseFormats = ['json'],
            allowedMethods = [index: "GET", create: "POST", include: "POST", checkout: "POST", delete: "DELETE", remove: "DELETE", removeById: "DELETE"]
+
+    /* ProductsAPI URL */
+    def productsApi = grailsApplication.config.productsApi.protocol +
+            '://' + grailsApplication.config.productsApi.hostname + ':' +
+            grailsApplication.config.productsApi.port + '/'
 
     /**
      * Index Method
@@ -119,7 +126,18 @@ class CartController {
             return
         }
 
-        //@TODO Check if Product Identifier Exists
+        def product = new RestBuilder().get((productsApi + 'product?id=' + request.JSON.productId).toString(), [:])
+
+        product.json instanceof JSONObject
+
+        if(!product.json.any()) {
+            response.status = 404
+
+            respond(message: 'Product doesn\'t exists. Verify your productId.')
+
+            return
+        }
+
         //@TODO Check if Token Expired
 
         item.save flush: true

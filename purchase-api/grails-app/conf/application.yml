@@ -59,6 +59,11 @@ endpoints:
 server:
   port: 8090
 
+productsApi:
+  protocol: http
+  port: 8080
+  hostname: localhost
+
 ---
 grails:
     mime:

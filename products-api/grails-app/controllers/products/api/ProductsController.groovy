@@ -30,6 +30,9 @@ class ProductsController {
             if (params.stock) {
                 or { eq('stock', params.stock) }
             }
+            if (params.id) {
+                or { eq('id', params.id) }
+            }
         }
     }
 
