@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "This describes the full workflow of both Products and Purchases RESTful APIs. <b>eCommerce</b> it's a simple open source software for development and educational tests that describes a full functional (without security schemas)",
+    "description": "This describes the full workflow of both Products and Purchases RESTful APIs. <b>eCommerce</b> it's a simple open source software for development and educational tests that describes a full functional (without security schemas) <br> <b>Note:</b> The PurchaseAPI uses JWT tokens. Read more at <a href='https://jwt.io'>here</a>",
     "version": "1.0.0",
     "title": "eCommerce",
     "license": {
@@ -552,6 +552,11 @@
         "tags": [
           "Purchase"
         ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
         "summary": "Add a new Cart Item to a Cart",
         "description": "",
         "operationId": "addCartItem",
@@ -597,6 +602,11 @@
       "delete": {
         "tags": [
           "Purchase"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
         ],
         "summary": "Remove a Item from a Cart",
         "description": "",
@@ -669,6 +679,11 @@
     },
     "/cart/items/{itemId}": {
       "delete": {
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
         "tags": [
           "Purchase"
         ],
@@ -728,6 +743,11 @@
     },
     "/cart/checkout": {
       "post": {
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
         "tags": [
           "Purchase"
         ],
@@ -975,5 +995,12 @@
   "externalDocs": {
     "description": "Find out more about eCommerce",
     "url": "https://github.com/sant0ro/eCommerce"
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "authorization",
+      "in": "header"
+    }
   }
 }
