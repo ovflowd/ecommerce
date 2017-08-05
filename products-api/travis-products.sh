@@ -3,6 +3,6 @@
 ./grailsw compile
 ./grailsw test-app
 
-mv test-results ../
+mv build/test-results ../../
 
 bash <(curl -s https://codecov.io/bash)

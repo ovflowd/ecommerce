@@ -16,7 +16,7 @@ class ProductsSpec extends Specification {
         Product product = new Product(name: 'A normal and sad product', description: 'We should not care with it.', price: 2.20)
         product.save()
 
-        then: 'We should succedd in registering it'
+        then: 'We should succeed in registering it'
         !product.hasErrors()
         Product.count() == 1
     }
