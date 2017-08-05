@@ -10,7 +10,7 @@ import grails.transaction.Transactional
  */
 class CartController {
     static responseFormats = ['json'],
-           allowedMethods = [index: "GET", create: "POST", include: "POST", checkout: "POST", delete: "DELETE", remove: "DELETE"]
+           allowedMethods = [index: "GET", create: "POST", include: "POST", checkout: "POST", delete: "DELETE", remove: "DELETE", removeById: "DELETE"]
 
     /**
      * Index Method
@@ -144,19 +144,24 @@ class CartController {
             return
         }
 
-        def item = Item.findWhere(productId: params.productId, cartId: params.cartId)
+        def item = Item.createCriteria().get() {
+            eq('productId', params.productId)
+            cartId {
+                eq('id', params.cartId)
+            }
+        }
 
         // If the item doesn't exists we can't continued
         if (!item) {
             response.status = 404
 
-            respond(message: 'Either Card Identifier or Product Identifier were not found.')
+            respond(message: 'Either Cart Identifier or Product Identifier were not found.')
 
             return
         }
 
         // Ignore the fact that maybe the final amount can be negative..
-        if ((item.properties.amount - params.amount) <= 0) {
+        if ((item.properties.amount - params.amount.toInteger()) <= 0) {
             item.delete flush: true
 
             respond(message: 'Item was deleted with success, since the amount were zeroed')
@@ -164,7 +169,7 @@ class CartController {
             return
         }
 
-        item.properties.amount -= params.amount
+        item.properties.amount -= params.amount.toInteger()
 
         item.save flush: true
 

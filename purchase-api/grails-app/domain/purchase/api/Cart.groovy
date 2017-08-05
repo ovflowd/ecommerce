@@ -30,8 +30,8 @@ class Cart {
         customer blank: false, nullable: false, matches: "(.*)\\s(.*)" // We don't accept special Unicode chars here.
         email email: true
         card creditCard: true, display: false
-        addedAt blank: true, nullable: true, display: false
-        editedAt blank: true, nullable: true, display: false
+        addedAt blank: true, nullable: true
+        editedAt blank: true, nullable: true
         expiresOn blank: true, nullable: true
     }
 

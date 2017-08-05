@@ -11,7 +11,7 @@ class UrlMappings {
         // Add a Cart Item
         post "/cart/items/"(controller:"cart", action:"include")
         // Remove a Cart Item
-        delete "/cart/items?"(controller:"cart", action:"remove")
+        delete "/cart/items/?"(controller:"cart", action:"remove")
         // Remove a Cart Item
         delete "/cart/items/$id"(controller:"cart", action:"removeById")
         // Checkout Cart
