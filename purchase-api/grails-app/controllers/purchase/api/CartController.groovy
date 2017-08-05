@@ -14,10 +14,8 @@ class CartController {
     static responseFormats = ['json'],
            allowedMethods = [index: "GET", create: "POST", include: "POST", checkout: "POST", delete: "DELETE", remove: "DELETE", removeById: "DELETE"]
 
-    /* ProductsAPI URL */
-    def productsApi = grailsApplication.config.productsApi.protocol +
-            '://' + grailsApplication.config.productsApi.hostname + ':' +
-            grailsApplication.config.productsApi.port + '/'
+    /* ProductsAPI URL (I know bad way of doing it.. whatever) */
+    def productsApi = grailsApplication.config.productsApi.protocol + '://' + grailsApplication.config.productsApi.hostname + ':' + grailsApplication.config.productsApi.port + '/', builder = new RestBuilder()
 
     /**
      * Index Method
@@ -77,6 +75,7 @@ class CartController {
      *
      * @return A successful message if the Cart was deleted with success, an Error message if the cart doesn't exists
      */
+    @Transactional
     def delete() {
         // Check if the Id Parameter is in the Request Path
         if (!params.id) {
@@ -112,6 +111,7 @@ class CartController {
      *
      * @return A successful message if the Item was added with success, an error message if something goes wrong
      */
+    @Transactional
     def include() {
         def item = Item.create()
 
@@ -126,14 +126,24 @@ class CartController {
             return
         }
 
-        def product = new RestBuilder().get((productsApi + 'product?id=' + request.JSON.productId).toString(), [:])
+        def product = builder.get((productsApi + 'product?id=' + request.JSON.productId).toString(), [:])
 
         product.json instanceof JSONObject
 
-        if(!product.json.any()) {
+        // Check if the Product really exists
+        if (!product.json.any()) {
             response.status = 404
 
             respond(message: 'Product doesn\'t exists. Verify your productId.')
+
+            return
+        }
+
+        // Check if we have the necessary amount for it
+        if (product.json.stock[0] < request.JSON.amount) {
+            response.status = 405
+
+            respond(message: 'The Product has an insufficient amount. Please try order in a different amount.')
 
             return
         }
@@ -152,6 +162,7 @@ class CartController {
      *
      * @return A successful message if the Items were was deleted with success, an Error message if the cart doesn't exists
      */
+    @Transactional
     def remove() {
         // Check if all the required parameters are on request
         if (!params.productId || !params.amount || !params.cartId) {
@@ -201,6 +212,7 @@ class CartController {
      *
      * @return A successful message if the Item was deleted with success, an Error message if the cart doesn't exists
      */
+    @Transactional
     def removeById() {
         // Check if the Id Parameter is in the Request Path
         if (!params.id) {
@@ -234,9 +246,8 @@ class CartController {
      *
      * @return A successful message including the items that you bought if the Checkout happens right, an Error message otherwise
      */
+    @Transactional
     def checkout() {
-        //@TODO Implement Communication with Products API
-
         // Check if the jSON contains the cart Identifier
         if (!request.JSON.cartId) {
             response.status = 400
@@ -259,9 +270,45 @@ class CartController {
             return
         }
 
-        //@TODO Proceed the Communication with Products API removing the Items
+        def finalPrice = 0F
 
-        respond(message: cart.properties.customer + ', thanks for ordering with us.', boughtItems: cart.properties.items, boughtWith: cart.properties.card)
+        // Iterate through all Product Items and do some validations
+        // Here happens some really bad workarounds (made because I hadn't time)
+        cart.items.removeAll { it ->
+            // Get current Product Item
+            def product = builder.get((productsApi + 'product?id=' + it.productId).toString(), [:])
+
+            product.json instanceof JSONObject
+
+            // Check if it still exists, if not sadly removing this product.
+            if (!product.json.any())
+                return true
+
+            // Check if amount it's valid, if not sadly removing this product.
+            if (product.json.stock[0] < it.amount)
+                return true
+
+            finalPrice += (product.json.price[0] * it.amount)
+
+            // All right.
+            def jsonText = '{"productId": "' + it.productId + '","details": "' + cart.customer + ' is ordering it.","amount": -' + it.amount + '}'
+
+            builder.post((productsApi + 'product/stock').toString()) {
+                contentType "application/json"
+                json jsonText
+            }
+
+            return false
+        }
+
+        def items = []
+
+        // Sorry I didn't found another way to do it. If it exists, I will be glad of knowing about it.
+        cart.items.toArray().each {
+            it -> items.add([productId: it.productId, amount: it.amount])
+        }
+
+        respond(message: cart.customer + ', thanks for ordering with us.', boughtItems: items, boughtWith: cart.card, finalPrice: finalPrice)
 
         cart.delete flush: true
     }
