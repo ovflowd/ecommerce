@@ -27,11 +27,11 @@ class Cart {
     static hasMany = [items: Item] // The Items inside the basket
 
     static constraints = {
-        customer blank: false, nullable: false, matches: "/^[a-z ,.'-]+\$/i" // We don't accept special Unicode chars here.
+        customer blank: false, nullable: false, matches: "(.*)\\s(.*)" // We don't accept special Unicode chars here.
         email email: true
-        card creditCard: true
-        addedAt blank: true, nullable: true
-        editedAt blank: true, nullable: true
+        card creditCard: true, display: false
+        addedAt blank: true, nullable: true, display: false
+        editedAt blank: true, nullable: true, display: false
         expiresOn blank: true, nullable: true
     }
 

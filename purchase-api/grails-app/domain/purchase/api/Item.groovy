@@ -27,8 +27,9 @@ class Item {
     static constraints = {
         productId blank: false, nullable: false, matches: "[0-9A-Fa-f]+", size: 32..32
         amount notEqual: 0, validator: { return (it % 1) == 0 }
-        addedAt blank: true, nullable: true
-        editedAt blank: true, nullable: true
+        cartId display: false
+        addedAt blank: true, nullable: true, display: false
+        editedAt blank: true, nullable: true, display: false
     }
 
     static mapping = {

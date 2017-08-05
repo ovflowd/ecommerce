@@ -32,8 +32,8 @@ class Product {
         description blank:false, nullable: false
         price blank:false, nullable: false, notEqual: 0F, scale: 2, min: 0F
         stock blank: true, nullable: true
-        addedAt blank:false, nullable: false
-        editedAt blank:false, nullable: false
+        addedAt blank:false, nullable: false, display: false
+        editedAt blank:false, nullable: false, display: false
     }
 
     static mapping = {

@@ -1,5 +1,6 @@
 package purchase.api
 
+import grails.converters.JSON
 import grails.transaction.Transactional
 
 /**
@@ -20,15 +21,17 @@ class CartController {
      */
     def index() {
         // Check if any of the criteria it's used on the query string
-        respond Cart.createCriteria().list(params) {
-            if (params.name) {
-                or { eq('customer', params.name) }
-            }
-            if (params.email) {
-                or { eq('email', params.email) }
-            }
-            if (params.id) {
-                or { eq('id', params.id) }
+        JSON.use("deep") {
+            respond Cart.createCriteria().list(params) {
+                if (params.name) {
+                    or { eq('customer', params.name) }
+                }
+                if (params.email) {
+                    or { eq('email', params.email) }
+                }
+                if (params.id) {
+                    or { eq('id', params.id) }
+                }
             }
         }
     }
