@@ -57,11 +57,11 @@ If you want run the standalone `.jar` just download it, and open your CMD/Termin
 
 **If you want RUN the Products API**
 
-`java -jar ecommerce-products-release-XXX.jar`
+`java -jar ecommerce-products-api-XXX.jar`
 
 **If you want RUN the Purchases API**
 
-`java -jar ecommerce-purchase-release-XXX.jar`
+`java -jar ecommerce-purchase-api-XXX.jar`
 
 You also can build from the sources by running the **Grails Console**, just went to one of the API's folder `purchase-api` or `products-api` and write on your CMD/Terminal the following:
 
