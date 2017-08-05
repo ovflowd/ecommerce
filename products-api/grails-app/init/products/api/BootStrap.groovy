@@ -12,20 +12,17 @@ class BootStrap {
         // If we are on the Development Environment, let's add some Default Data.
         if (Environment.current == Environment.DEVELOPMENT) {
             // We add some Products
-            Product.saveAll(
-                    new Product(name: 'Java for Dummies (For Dummies (Computers))', description: '6th ed. Edition - by Barry Burd PH.D.', price: 36.34),
-                    new Product(name: 'Beginning Groovy and Grails: From Novice to Professional', description: '1st Edition - by Christopher M. Judd (Author), Joseph Faisal Nusairat', price: 38.21),
-                    new Product(name: 'Linkedin Premium Subscription', description: 'A voucher for a single month Linkedin Career Premium Subscription', price: 15.6)
-            )
-
-            // We get some identifiers
-            def javaIdentifier = Product.first().id, linkedinIdentifier = Product.last().id
+            def javaProduct = new Product(name: 'Java for Dummies (For Dummies (Computers))', description: '6th ed. Edition - by Barry Burd PH.D.', price: 36.34).save()
+            def linkedinProduct = new Product(name: 'Linkedin Premium Subscription', description: 'A voucher for a single month Linkedin Career Premium Subscription', price: 15.6).save()
+            new Product(name: 'Beginning Groovy and Grails: From Novice to Professional', description: '1st Edition - by Christopher M. Judd (Author), Joseph Faisal Nusairat', price: 38.21).save()
 
             // We add single Stock entries for those Products
-            Stock.saveAll(
-                    new Stock(details: 'Lojas Americanas added Stock for Java For Dummies Book', amount: 20, productId: javaIdentifier),
-                    new Stock(details: 'Linkedin has now 20000 more slots for Linkedin Premium Vouchers. Get yours now.', amount: 20000, productId: linkedinIdentifier)
-            )
+            new Stock(details: 'Lojas Americanas added Stock for Java For Dummies Book', amount: 20, productId: javaProduct.id).save()
+            new Stock(details: 'Linkedin has now 20000 more slots for Linkedin Premium Vouchers. Get yours now.', amount: 20000, productId: linkedinProduct.id).save()
+
+            // Since we're not in a Controller we need manually set the amount of stock
+            javaProduct.properties.stock = 20
+            linkedinProduct.properties.stock = 20000
         }
     }
 
