@@ -18,6 +18,6 @@ class ProductSpec extends Specification {
         def product = new Product(price: -20, name: 'An abnormal product.').save()
 
         then:
-        product.hasErrors()
+        !product
     }
 }

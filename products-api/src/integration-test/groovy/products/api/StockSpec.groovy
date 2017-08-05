@@ -12,7 +12,7 @@ import spock.lang.*
 
 @Integration
 @Rollback
-class StockSpec extends Specification {
+class StockIntegrationSpec extends Specification {
     def setup() {
         Product.saveAll(new Product(name: 'A stocked Product', price: 2.20))
     }

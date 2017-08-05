@@ -6,7 +6,7 @@ import spock.lang.*
 
 @Integration
 @Rollback
-class ProductsSpec extends Specification {
+class ProductIntegrationSpec extends Specification {
     def setup() {}
 
     def cleanup() {}

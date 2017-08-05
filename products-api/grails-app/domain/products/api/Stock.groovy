@@ -21,7 +21,7 @@ class Stock {
 
     /* Attributes */
     String details = "Stock entry without description." // Details about this Stock Entry
-    Integer amount = 0 // Amount added or removed in the stock
+    Integer amount // Amount added or removed in the stock
     String productId // Product Identifier
 
     /* Timestamps */
@@ -32,8 +32,8 @@ class Stock {
         details blank: true, nullable: false
         addedAt blank: true, nullable: true
         editedAt blank: true, nullable: true
-        productId blank: false, nullable: false
-        amount notEqual: 0
+        productId blank: false, nullable: false, matches: "[0-9A-Fa-f]+", size: 32..32
+        amount notEqual: 0, validator: { return (it % 1) == 0 }
     }
 
     static mapping = {
