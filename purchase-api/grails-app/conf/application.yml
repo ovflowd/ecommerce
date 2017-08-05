@@ -64,6 +64,10 @@ productsApi:
   port: 8080
   hostname: localhost
 
+purchaseApi:
+  jwtHash: 2b0a25e42196a65ca1d3e498a2c51530cba45d32 # Signature Hash for JWT (Must be same on Products API)
+  expireTime: 3600 # In seconds
+
 ---
 grails:
     mime:

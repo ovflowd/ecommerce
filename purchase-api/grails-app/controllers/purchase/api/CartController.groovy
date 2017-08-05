@@ -3,6 +3,10 @@ package purchase.api
 import grails.converters.JSON
 import grails.plugins.rest.client.RestBuilder
 import grails.transaction.Transactional
+import groovy.time.TimeCategory
+import io.jsonwebtoken.Claims
+import io.jsonwebtoken.Jwts
+import io.jsonwebtoken.SignatureAlgorithm
 import org.grails.web.json.JSONObject
 
 /**
@@ -15,7 +19,8 @@ class CartController {
            allowedMethods = [index: "GET", create: "POST", include: "POST", checkout: "POST", delete: "DELETE", remove: "DELETE", removeById: "DELETE"]
 
     /* ProductsAPI URL (I know bad way of doing it.. whatever) */
-    def productsApi = grailsApplication.config.productsApi.protocol + '://' + grailsApplication.config.productsApi.hostname + ':' + grailsApplication.config.productsApi.port + '/', builder = new RestBuilder()
+    def productsApi = grailsApplication.config.productsApi.protocol + '://' + grailsApplication.config.productsApi.hostname + ':' + grailsApplication.config.productsApi.port + '/',
+        builder = new RestBuilder(), jwtSignature = grailsApplication.config.purchaseApi.jwtHash as String
 
     /**
      * Index Method
@@ -63,9 +68,18 @@ class CartController {
             return
         }
 
+        // Set the Expire Time of the Token from the Given Configuration
+        use(TimeCategory) {
+            cart.expiresOn = grailsApplication.config.purchaseApi.expireTime.seconds.from.now
+        }
+
         cart.save flush: true
 
-        respond(message: 'Cart Added with Success', id: cart.id, token: "Not Implemented Yet")
+        // Generate the JWT Token
+        def token = Jwts.builder().setId(cart.id).setExpiration(cart.expiresOn).setSubject(cart.customer)
+                .signWith(SignatureAlgorithm.HS256, jwtSignature).compact()
+
+        respond(message: 'Cart Added with Success', id: cart.id, token: token)
     }
 
     /**
@@ -85,8 +99,6 @@ class CartController {
 
             return
         }
-
-        //@TODO: Check if Token Expired
 
         def cart = Cart.get(params.id as Serializable)
 
@@ -113,6 +125,10 @@ class CartController {
      */
     @Transactional
     def include() {
+        // Check if JWT is present and valid
+        if(!jwt())
+            return
+
         def item = Item.create()
 
         bindData item, request.JSON
@@ -126,7 +142,9 @@ class CartController {
             return
         }
 
-        def product = builder.get((productsApi + 'product?id=' + request.JSON.productId).toString(), [:])
+        def url = (productsApi + 'product?id=' + request.JSON.productId) as String
+
+        def product = builder.get(url, [:])
 
         product.json instanceof JSONObject
 
@@ -148,8 +166,6 @@ class CartController {
             return
         }
 
-        //@TODO Check if Token Expired
-
         item.save flush: true
 
         respond(message: 'Item added to Cart with Success', id: item.id)
@@ -164,6 +180,10 @@ class CartController {
      */
     @Transactional
     def remove() {
+        // Check if JWT is present and valid
+        if(!jwt())
+            return
+
         // Check if all the required parameters are on request
         if (!params.productId || !params.amount || !params.cartId) {
             response.status = 400
@@ -214,6 +234,10 @@ class CartController {
      */
     @Transactional
     def removeById() {
+        // Check if JWT is present and valid
+        if(!jwt())
+            return
+
         // Check if the Id Parameter is in the Request Path
         if (!params.id) {
             response.status = 400
@@ -248,6 +272,10 @@ class CartController {
      */
     @Transactional
     def checkout() {
+        // Check if JWT is present and valid
+        if(!jwt())
+            return
+
         // Check if the jSON contains the cart Identifier
         if (!request.JSON.cartId) {
             response.status = 400
@@ -256,8 +284,6 @@ class CartController {
 
             return
         }
-
-        //@TODO Check if the Token Expired
 
         def cart = Cart.get(request.JSON.cartId as Serializable)
 
@@ -276,7 +302,9 @@ class CartController {
         // Here happens some really bad workarounds (made because I hadn't time)
         cart.items.removeAll { it ->
             // Get current Product Item
-            def product = builder.get((productsApi + 'product?id=' + it.productId).toString(), [:])
+            def url = (productsApi + 'product?id=' + it.productId) as String
+
+            def product = builder.get(url, [:])
 
             product.json instanceof JSONObject
 
@@ -288,12 +316,14 @@ class CartController {
             if (product.json.stock[0] < it.amount)
                 return true
 
-            finalPrice += (product.json.price[0] * it.amount)
+            finalPrice += (product.json.price[0] * it.amount).toFloat()
 
             // All right.
             def jsonText = '{"productId": "' + it.productId + '","details": "' + cart.customer + ' is ordering it.","amount": -' + it.amount + '}'
 
-            builder.post((productsApi + 'product/stock').toString()) {
+            url = (productsApi + 'product/stock') as String
+
+            builder.post(url) {
                 contentType "application/json"
                 json jsonText
             }
@@ -308,8 +338,50 @@ class CartController {
             it -> items.add([productId: it.productId, amount: it.amount])
         }
 
-        respond(message: cart.customer + ', thanks for ordering with us.', boughtItems: items, boughtWith: cart.card, finalPrice: finalPrice)
-
         cart.delete flush: true
+
+        respond(message: cart.customer + ', thanks for ordering with us.', boughtItems: items, boughtWith: cart.card, finalPrice: 'USD: ' + finalPrice)
+    }
+
+    /**
+     * Jwt Method
+     *
+     * Does the JWT Authorization Validation when Required
+     *
+     * @return True if the JWT is valid and not expired, false otherwise
+     */
+    def jwt() {
+        def authorization = request.getHeader('authorization')
+
+        // Check if authorization header is present
+        if (!authorization) {
+            response.status = 403
+
+            respond(message: 'You didn\'t provided a Token')
+
+            return false
+        }
+
+        try {
+            // Tries to decode the JWT token
+            Claims claims = Jwts.parser().setSigningKey(jwtSignature).parseClaimsJws(authorization).getBody() as Claims
+
+            // Check if the Token hasn't expired
+            if (claims.getExpiration() < new Date()) {
+                response.status = 403
+
+                respond(message: 'Your Token has expired')
+
+                return false
+            }
+        } catch (Exception ignored) { // We have an invalid JWT here!
+            response.status = 403
+
+            respond(message: 'Invalid given JWT Token.')
+
+            return false
+        }
+
+        return true
     }
 }

@@ -5,6 +5,7 @@ buildscript {
     repositories {
         mavenLocal()
         maven { url "https://repo.grails.org/grails/core" }
+        maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
@@ -29,6 +30,7 @@ ext {
 
 repositories {
     mavenLocal()
+    mavenCentral()
     maven { url "https://repo.grails.org/grails/core" }
 }
 
@@ -60,6 +62,7 @@ dependencies {
     compile "org.hibernate:hibernate-ehcache"
     compile "org.grails.plugins:views-json"
     compile 'org.grails:grails-datastore-rest-client'
+    compile 'io.jsonwebtoken:jjwt:0.7.0'
 
     runtime 'mysql:mysql-connector-java'
     runtime "com.h2database:h2"
