@@ -30,8 +30,6 @@ class ProductsController extends RestfulController {
      * @return a List of Products matching the search criteria or all Products if no criteria used
      */
     def index() {
-        respond(wtf: 'hello')
-
         respond Product.createCriteria().list(params) {
             if (params.name) {
                 or { eq('name', params.name) }
@@ -65,6 +63,8 @@ class ProductsController extends RestfulController {
 
             return
         }
+
+        request.JSON['stock'] = 0
 
         bindData product, request.JSON
 

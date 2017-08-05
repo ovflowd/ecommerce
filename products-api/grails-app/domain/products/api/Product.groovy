@@ -16,7 +16,7 @@ package products.api
 class Product {
 
     /* Identifiers */
-    String id
+    String id // Using Hibernate UUID Generator
 
     /* Attributes */
     String name // The name of the Product
@@ -40,6 +40,6 @@ class Product {
     static mapping = {
         price defultValue: 1.0
         id generator: 'uuid'
-        stock insertable: false, updateable: true, defaultValue: 0
+        stock defaultValue: 0
     }
 }

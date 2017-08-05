@@ -87,7 +87,9 @@ class StockController extends RestfulController {
             return
         }
 
-        def sum = Stock.findAllWhere(productId: product.id).amount.sum() + stock.amount
+        def stockEntries = Stock.findAllWhere(productId: product.id)
+
+        def sum = stockEntries ? stockEntries.amount.sum() + stock.amount : stock.amount
 
         // The sum of the amount cannot be less than zero. It's impossible have negative stock in someplace
         if (sum < 0) {

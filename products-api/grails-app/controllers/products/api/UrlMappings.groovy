@@ -5,7 +5,7 @@ class UrlMappings {
 
     static mappings = {
         // List Products / Search Products
-        get "/product?"(controller:"products", action:"index")
+        get "/product/?"(controller:"products", action:"index")
         // Add a Product
         post "/product"(controller:"products", action:"save")
         // Update a Product
@@ -13,9 +13,9 @@ class UrlMappings {
         // Delete a Product
         delete "/product/$id"(controller:"products", action:"delete")
         // Add Stock Entry
-        post "/product/stock"(controller:"stock", action:"save")
+        post "/product/stock/"(controller:"stock", action:"save")
         // List Stock
-        get "/product/stock?"(controller:"stock", action:"index")
+        get "/product/stock/?"(controller:"stock", action:"index")
         // Index Page
         get "/"(controller: 'application', action:'index')
         // Internal Server Error

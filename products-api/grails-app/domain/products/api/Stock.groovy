@@ -9,16 +9,19 @@ package products.api
  * @observation The Business Logic will not allow that the stock amount becomes negative.
  * @observation a Stock entry can have negative or positive entries that means checkout
  *  or entrance of products.
+ *
+ * @see https://docs.jboss.org/hibernate/orm/3.3/reference/en/html/mapping.html#mapping-declaration-id-enhanced
+ *  For Generators
  */
 
 class Stock {
 
     /* Identifiers */
-    String id
+    String id // Using UUID Generator of Hibernate
 
     /* Attributes */
     String details = "Stock entry without description." // Details about this Stock Entry
-    Integer amount // Amount added or removed in the stock
+    Integer amount = 0 // Amount added or removed in the stock
     String productId // Product Identifier
 
     /* Timestamps */
