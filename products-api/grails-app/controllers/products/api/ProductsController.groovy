@@ -49,7 +49,7 @@ class ProductsController {
         def product = Product.create()
 
         // Check if either price property exists and is a valid float
-        if(!request.JSON.price || (request.JSON.price % 1) != 0) {
+        if(!request.JSON.price || (request.JSON.price % 1) == 0) {
             response.status = 405
 
             respond(message: 'Invalid Input. Price isn\'t a valid float number.')
@@ -71,6 +71,8 @@ class ProductsController {
         }
 
         product.save flush: true
+
+        new Log(relatedTable: 'product', relatedElement:  product.id, details: 'A new product was registered with name: ' + product.name + ', price: ' + product.price).save()
 
         respond(message: 'Product Registered with Success', id: product.id)
     }
@@ -114,6 +116,8 @@ class ProductsController {
             respond(message: 'Invalid Input. Check your jSON')
         }
 
+        new Log(relatedTable: 'product', relatedElement:  product.id, details: 'A product was updated. new name: ' + product.name + ', new price: ' + product.price).save()
+
         product.properties.editedAt = new Date()
 
         product.save flush: true
@@ -149,6 +153,8 @@ class ProductsController {
 
             return
         }
+
+        new Log(relatedTable: 'product', relatedElement:  product.id, details: 'A product was deleted with name: ' + product.name).save()
 
         product.delete flush: true
 

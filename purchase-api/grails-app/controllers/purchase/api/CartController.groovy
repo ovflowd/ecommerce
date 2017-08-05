@@ -13,6 +13,8 @@ import org.grails.web.json.JSONObject
  * Cart Controller
  *
  * Manages all operations that happens with a Cart including it Items
+ *
+ * @see https://jwt.io/introduction/ JWT Documentation
  */
 class CartController {
     static responseFormats = ['json'],
@@ -126,8 +128,13 @@ class CartController {
     @Transactional
     def include() {
         // Check if JWT is present and valid
-        if(!jwt())
+        def identifier = jwt()
+
+        if(!identifier)
             return
+
+        // Uses the Identifier in order to get the CartId
+        request.JSON.cartId = request.JSON.cartId ?: identifier
 
         def item = Item.create()
 
@@ -181,14 +188,19 @@ class CartController {
     @Transactional
     def remove() {
         // Check if JWT is present and valid
-        if(!jwt())
+        def identifier = jwt()
+
+        if(!identifier)
             return
 
+        // Uses the Identifier in order to get the CartId
+        identifier = params.cartId ?: identifier
+
         // Check if all the required parameters are on request
-        if (!params.productId || !params.amount || !params.cartId) {
+        if (!params.productId || !params.amount) {
             response.status = 400
 
-            respond(message: 'Invalid Card Identifier or Amount of Product Identifier given.')
+            respond(message: 'Invalid Amount of Product Identifier given.')
 
             return
         }
@@ -196,7 +208,7 @@ class CartController {
         def item = Item.createCriteria().get() {
             eq('productId', params.productId)
             cartId {
-                eq('id', params.cartId)
+                eq('id', identifier)
             }
         }
 
@@ -273,11 +285,16 @@ class CartController {
     @Transactional
     def checkout() {
         // Check if JWT is present and valid
-        if(!jwt())
+        def identifier = jwt()
+
+        if(!identifier)
             return
 
+        // Uses the Identifier in order to get the CartId
+        identifier = request.JSON.cartId ?: identifier
+
         // Check if the jSON contains the cart Identifier
-        if (!request.JSON.cartId) {
+        if (!identifier) {
             response.status = 400
 
             respond(message: 'Invalid Identifier or no Identifier supplied')
@@ -285,7 +302,7 @@ class CartController {
             return
         }
 
-        def cart = Cart.get(request.JSON.cartId as Serializable)
+        def cart = Cart.get(identifier as Serializable)
 
         // Check if the Cart exists
         if (!cart) {
@@ -348,7 +365,7 @@ class CartController {
      *
      * Does the JWT Authorization Validation when Required
      *
-     * @return True if the JWT is valid and not expired, false otherwise
+     * @return the Identifier if the JWT is valid and not expired, false otherwise
      */
     def jwt() {
         def authorization = request.getHeader('authorization')
@@ -374,6 +391,8 @@ class CartController {
 
                 return false
             }
+
+            return claims.getId()
         } catch (Exception ignored) { // We have an invalid JWT here!
             response.status = 403
 
@@ -381,7 +400,5 @@ class CartController {
 
             return false
         }
-
-        return true
     }
 }
