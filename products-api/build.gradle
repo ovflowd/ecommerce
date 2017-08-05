@@ -16,11 +16,12 @@ buildscript {
 version "0.1"
 group "products.api"
 
-apply plugin:"eclipse"
-apply plugin:"idea"
-apply plugin:"war"
-apply plugin:"org.grails.grails-web"
-apply plugin:"org.grails.plugins.views-json"
+apply plugin: "eclipse"
+apply plugin: "idea"
+apply plugin: "war"
+apply plugin: "org.grails.grails-web"
+apply plugin: "org.grails.plugins.views-json"
+apply plugin: "jacoco"
 
 ext {
     grailsVersion = project.grailsVersion
@@ -68,4 +69,12 @@ dependencies {
     testCompile "org.grails:grails-datastore-rest-client"
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = gradleWrapperVersion
+}
+
+jacocoTestReport {
+    executionData = files tasks.withType(Test)*.jacoco*.destinationFile.findAll { it.exists() }
 }
