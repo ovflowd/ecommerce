@@ -20,6 +20,7 @@ class ProductsController {
      * @return a List of Products matching the search criteria or all Products if no criteria used
      */
     def index() {
+        // Check if any of the criteria it's used on the query string
         respond Product.createCriteria().list(params) {
             if (params.name) {
                 or { eq('name', params.name) }

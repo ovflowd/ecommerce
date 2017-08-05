@@ -60,13 +60,17 @@ dependencies {
     compile "org.hibernate:hibernate-ehcache"
     compile "org.grails.plugins:views-json"
     compile 'org.grails:grails-datastore-rest-client'
-    console "org.grails:grails-console"
-    profile "org.grails.profiles:rest-api"
+
     runtime 'mysql:mysql-connector-java'
     runtime "com.h2database:h2"
+
     testCompile "org.grails:grails-plugin-testing"
     testCompile "org.grails.plugins:geb"
     testCompile "org.grails:grails-datastore-rest-client"
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
+
+    console "org.grails:grails-console"
+
+    profile "org.grails.profiles:rest-api"
 }
