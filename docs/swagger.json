@@ -463,9 +463,9 @@
             "type": "string"
           },
           {
-            "name": "cartId",
+            "name": "id",
             "in": "query",
-            "description": "Search a Cart by cartId",
+            "description": "Search a Cart by id",
             "type": "string"
           }
         ],
@@ -480,7 +480,9 @@
             }
           }
         }
-      },
+      }
+    },
+    "/cart/{cartId}": {
       "delete": {
         "tags": [
           "Purchase"
@@ -489,22 +491,11 @@
         "description": "",
         "parameters": [
           {
-            "name": "name",
-            "in": "query",
-            "description": "Delete a Cart by Customer Name",
-            "type": "string"
-          },
-          {
-            "name": "email",
-            "in": "query",
-            "description": "Delete a Cart by Customer E-mail",
-            "type": "string"
-          },
-          {
             "name": "cartId",
-            "in": "query",
+            "in": "path",
             "description": "Delete a Cart by the Cart Id",
-            "type": "string"
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
@@ -624,6 +615,65 @@
             "required": true,
             "in": "query",
             "description": "Specify the Affected Cart",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "title": "Success",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Item Removed with Success"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied",
+            "schema": {
+              "type": "object",
+              "title": "InvalidId",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid Cart/Product Identifier"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Cart Not Found",
+            "schema": {
+              "type": "object",
+              "title": "NotFound",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Cart Not Found"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cart/items/{itemId}": {
+      "delete": {
+        "tags": [
+          "Purchase"
+        ],
+        "summary": "Remove a Item from a Cart",
+        "description": "",
+        "parameters": [
+          {
+            "name": "itemId",
+            "required": true,
+            "in": "path",
+            "description": "Remove a Item by Item Id",
             "type": "string"
           }
         ],
@@ -850,6 +900,10 @@
         "email": {
           "type": "string",
           "example": "Customer E-mail"
+        },
+        "card": {
+          "type": "string",
+          "example": "Credit Card"
         }
       }
     },
