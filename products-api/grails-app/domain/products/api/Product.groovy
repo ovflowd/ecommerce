@@ -12,7 +12,6 @@ package products.api
  *  @see https://docs.jboss.org/hibernate/orm/3.3/reference/en/html/mapping.html#mapping-declaration-id-enhanced
  *      For Generators
  */
-
 class Product {
 
     /* Identifiers */
@@ -38,8 +37,8 @@ class Product {
     }
 
     static mapping = {
-        price defultValue: 1.0
         id generator: 'uuid'
+        price defultValue: 1.0
         stock defaultValue: 0
     }
 }

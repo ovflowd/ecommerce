@@ -7,7 +7,6 @@ import grails.transaction.Transactional
  *
  * Manages all operations that happens with Stock Entries
  */
-
 class StockController {
     static responseFormats = ['json'], allowedMethods = [index: "GET", save: "POST"]
 

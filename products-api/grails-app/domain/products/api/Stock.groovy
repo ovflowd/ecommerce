@@ -13,7 +13,6 @@ package products.api
  * @see https://docs.jboss.org/hibernate/orm/3.3/reference/en/html/mapping.html#mapping-declaration-id-enhanced
  *  For Generators
  */
-
 class Stock {
 
     /* Identifiers */
@@ -30,14 +29,14 @@ class Stock {
 
     static constraints = {
         details blank: true, nullable: false
+        amount notEqual: 0, validator: { return (it % 1) == 0 }
+        productId blank: false, nullable: false, matches: "[0-9A-Fa-f]+", size: 32..32
         addedAt blank: true, nullable: true
         editedAt blank: true, nullable: true
-        productId blank: false, nullable: false, matches: "[0-9A-Fa-f]+", size: 32..32
-        amount notEqual: 0, validator: { return (it % 1) == 0 }
     }
 
     static mapping = {
-        amount defaultValue: 1
         id generator: 'uuid'
+        amount defaultValue: 1
     }
 }

@@ -8,7 +8,6 @@ import org.springframework.validation.BindingResult
  *
  * Manages all operations that happens with Products
  */
-
 class ProductsController {
     static responseFormats = ['json'], allowedMethods = [index: "GET", save: "POST", update: "PUT"]
 
@@ -111,6 +110,8 @@ class ProductsController {
 
             respond(message: 'Invalid Input. Check your jSON')
         }
+
+        product.properties.editedAt = new Date()
 
         product.save flush: true
 
