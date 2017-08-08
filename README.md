@@ -73,7 +73,7 @@ If you want to run it in development scenario, you can also do it by **building*
 
 `gradlew bootRun`
 
-**Option #2 - Run bt Grailsw**
+**Option #2 - Run by Grailsw**
 
 `grailsw run-app`
 
@@ -81,7 +81,7 @@ If you want to run it in development scenario, you can also do it by **building*
 
 Production Environments are focused in being ready. That means, you just need execute the Jar File.
 
-In the Production Environment all eCommerce API's are configured to work with **MySQL** in a Database called **productsAPI** and to work with a default **username and password** combination:
+In the Production Environment all eCommerce API's are configured to work with **MySQL** in two databases; **productsAPI** and **purchaseAPI** and to work with a default **username and password** combination:
 
 * **Username:** commerce
 * **Password:** commerceapi
