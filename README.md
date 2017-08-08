@@ -20,12 +20,12 @@
 
 | Feature  |  Coded?       | Description  |
 |----------|:-------------:|:-------------|
-| Create a Cart | &#10008; | Ability of Create a new Cart |
-| See Cart | &#10008; | Ability to see the Cart and it items |
-| Remove a Cart | &#10008; | Ability of Remove a Cart |
-| Add Item | &#10008; | Ability of add a new Item on the Cart |
-| Remove a Item | &#10008; | Ability of Remove a Item from the Cart |
-| Checkout | &#10008; | Ability to Checkout |
+| Create a Cart | &#10004; | Ability of Create a new Cart |
+| See Cart | &#10004; | Ability to see the Cart and it items |
+| Remove a Cart | &#10004; | Ability of Remove a Cart |
+| Add Item | &#10004; | Ability of add a new Item on the Cart |
+| Remove a Item | &#10004; | Ability of Remove a Item from the Cart |
+| Checkout | &#10004; | Ability to Checkout |
 
 # eCommerce
 
@@ -57,11 +57,11 @@ If you want run the standalone `.jar` just download it, and open your CMD/Termin
 
 **If you want RUN the Products API**
 
-`java -jar ecommerce-products-release-XXX.jar`
+`java -jar ecommerce-products-api-XXX.jar`
 
 **If you want RUN the Purchases API**
 
-`java -jar ecommerce-purchase-release-XXX.jar`
+`java -jar ecommerce-purchase-api-XXX.jar`
 
 You also can build from the sources by running the **Grails Console**, just went to one of the API's folder `purchase-api` or `products-api` and write on your CMD/Terminal the following:
 
