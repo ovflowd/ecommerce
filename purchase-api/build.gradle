@@ -63,6 +63,8 @@ dependencies {
     compile "org.grails.plugins:views-json-templates"
     compile 'io.jsonwebtoken:jjwt:0.7.0'
 
+    compile 'org.grails:grails-datastore-rest-client:5.0.0.RC2'
+
     runtime "org.glassfish.web:el-impl:2.1.2-b03"
     runtime 'mysql:mysql-connector-java'
     runtime "com.h2database:h2"
