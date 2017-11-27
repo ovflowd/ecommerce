@@ -1,15 +1,13 @@
 package products.api
 
-import grails.test.mixin.TestFor
+import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
-@TestFor(Log)
-class LogSpec extends Specification {
-    def 'test if a normal log passes on the validation'() {
+class LogSpec extends Specification implements DomainUnitTest<Log> {
+    void 'test if a normal log passes on the validation'() {
         when:
-        def log = new Log(relatedElement: 'some-element', relatedTable: 'product', details: 'Some shit happened here.').save()
-
+            def log = new Log(relatedElement: 'some-element', relatedTable: 'product', details: 'Some shit happened here.').save()
         then:
-        log
+            log
     }
 }
