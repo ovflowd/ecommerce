@@ -3,6 +3,7 @@ package purchase.api
 import grails.converters.JSON
 import grails.plugins.rest.client.RestBuilder
 import grails.transaction.Transactional
+import groovy.json.JsonBuilder
 import groovy.time.TimeCategory
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
@@ -16,13 +17,9 @@ import org.grails.web.json.JSONObject
  *
  * @see https://jwt.io/introduction/ JWT Documentation
  */
-class CartController {
-    static responseFormats = ['json'],
-           allowedMethods = [index: "GET", create: "POST", include: "POST", checkout: "POST", delete: "DELETE", remove: "DELETE", removeById: "DELETE"]
-
-    /* ProductsAPI URL (I know bad way of doing it.. whatever) */
-    def productsApi = grailsApplication.config.productsApi.protocol + '://' + grailsApplication.config.productsApi.hostname + ':' + grailsApplication.config.productsApi.port + '/',
-        builder = new RestBuilder(), jwtSignature = grailsApplication.config.purchaseApi.jwtHash as String
+@org.springframework.web.bind.annotation.RestController
+class CartController extends RestController {
+    static responseFormats = ['json'], allowedMethods = [index: "GET", create: "POST", include: "POST", checkout: "POST", delete: "DELETE", remove: "DELETE", removeById: "DELETE"]
 
     /**
      * Index Method
@@ -34,7 +31,7 @@ class CartController {
     def index() {
         // Check if any of the criteria it's used on the query string
         JSON.use("deep") {
-            respond Cart.createCriteria().list(params) {
+            [Cart.createCriteria().list(params) {
                 if (params.name) {
                     or { eq('customer', params.name) }
                 }
@@ -44,7 +41,7 @@ class CartController {
                 if (params.id) {
                     or { eq('id', params.id) }
                 }
-            }
+            }]
         }
     }
 
@@ -65,7 +62,7 @@ class CartController {
         if (!cart.validate()) {
             response.status = 405
 
-            respond(message: 'Invalid Input. Check your jSON.')
+            [message: 'Invalid Input. Check your jSON.']
 
             return
         }
@@ -78,10 +75,9 @@ class CartController {
         cart.save flush: true
 
         // Generate the JWT Token
-        def token = Jwts.builder().setId(cart.id).setExpiration(cart.expiresOn).setSubject(cart.customer)
-                .signWith(SignatureAlgorithm.HS256, jwtSignature).compact()
+        def token = Jwts.builder().setId(cart.id).setExpiration(cart.expiresOn).setSubject(cart.customer).signWith(SignatureAlgorithm.HS256, jwtSignature).compact()
 
-        respond(message: 'Cart Added with Success', id: cart.id, token: token)
+        [message: 'Cart Added with Success', id: cart.id, token: token]
     }
 
     /**
@@ -97,7 +93,7 @@ class CartController {
         if (!params.id) {
             response.status = 400
 
-            respond(message: 'Invalid Identifier or no Identifier supplied')
+            [message: 'Invalid Identifier or no Identifier supplied']
 
             return
         }
@@ -108,14 +104,14 @@ class CartController {
         if (!cart) {
             response.status = 404
 
-            respond(message: 'Cart not Found. Ensure that the Identifier it\'s correct.')
+            [message: 'Cart not Found. Ensure that the Identifier it\'s correct.']
 
             return
         }
 
         cart.delete flush: true
 
-        respond(message: 'Cart Removed with Success.')
+        [message: 'Cart Removed with Success.']
     }
 
     /**
@@ -130,7 +126,7 @@ class CartController {
         // Check if JWT is present and valid
         def identifier = jwt()
 
-        if(!identifier)
+        if (!identifier)
             return
 
         // Uses the Identifier in order to get the CartId
@@ -144,14 +140,12 @@ class CartController {
         if (!item.validate()) {
             response.status = 405
 
-            respond(message: 'Invalid Input. Check your jSON.')
+            [message: 'Invalid Input. Check your jSON.']
 
             return
         }
 
-        def url = (productsApi + 'product?id=' + request.JSON.productId) as String
-
-        def product = builder.get(url, [:])
+        def product = builder.get(productsApi.path('product').query('id={productId}').buildAndExpand(request.JSON['productId'] as Integer).toUriString(), [:])
 
         product.json instanceof JSONObject
 
@@ -159,23 +153,23 @@ class CartController {
         if (!product.json.any()) {
             response.status = 404
 
-            respond(message: 'Product doesn\'t exists. Verify your productId.')
+            [message: 'Product doesn\'t exists. Verify your productId.']
 
             return
         }
 
         // Check if we have the necessary amount for it
-        if (product.json.stock[0] < request.JSON.amount) {
+        if (product.json.stock && product.json.stock[0] < request.JSON['amount']) {
             response.status = 405
 
-            respond(message: 'The Product has an insufficient amount. Please try order in a different amount.')
+            [message: 'The Product has an insufficient amount. Please try order in a different amount.']
 
             return
         }
 
         item.save flush: true
 
-        respond(message: 'Item added to Cart with Success', id: item.id)
+        [message: 'Item added to Cart with Success', id: item.id]
     }
 
     /**
@@ -190,7 +184,7 @@ class CartController {
         // Check if JWT is present and valid
         def identifier = jwt()
 
-        if(!identifier)
+        if (!identifier)
             return
 
         // Uses the Identifier in order to get the CartId
@@ -200,7 +194,7 @@ class CartController {
         if (!params.productId || !params.amount) {
             response.status = 400
 
-            respond(message: 'Invalid Amount of Product Identifier given.')
+            [message: 'Invalid Amount of Product Identifier given.']
 
             return
         }
@@ -216,7 +210,7 @@ class CartController {
         if (!item) {
             response.status = 404
 
-            respond(message: 'Either Cart Identifier or Product Identifier were not found.')
+            [message: 'Either Cart Identifier or Product Identifier were not found.']
 
             return
         }
@@ -225,7 +219,7 @@ class CartController {
         if ((item.properties.amount - params.amount.toInteger()) <= 0) {
             item.delete flush: true
 
-            respond(message: 'Item was deleted with success, since the amount were zeroed')
+            [message: 'Item was deleted with success, since the amount were zeroed']
 
             return
         }
@@ -234,7 +228,7 @@ class CartController {
 
         item.save flush: true
 
-        respond(message: 'Item amount on purchase reduced', newAmount: item.properties.amount)
+        [message: 'Item amount on purchase reduced', newAmount: item.properties.amount]
     }
 
     /**
@@ -247,14 +241,14 @@ class CartController {
     @Transactional
     def removeById() {
         // Check if JWT is present and valid
-        if(!jwt())
+        if (!jwt())
             return
 
         // Check if the Id Parameter is in the Request Path
         if (!params.id) {
             response.status = 400
 
-            respond(message: 'Invalid Identifier or no Identifier supplied')
+            [message: 'Invalid Identifier or no Identifier supplied']
 
             return
         }
@@ -265,14 +259,14 @@ class CartController {
         if (!item) {
             response.status = 404
 
-            respond(message: 'Item not Found. Ensure that the Identifier it\'s correct.')
+            [message: 'Item not Found. Ensure that the Identifier it\'s correct.']
 
             return
         }
 
         item.delete flush: true
 
-        respond(message: 'Item Removed with Success.')
+        [message: 'Item Removed with Success.']
     }
 
     /**
@@ -287,17 +281,17 @@ class CartController {
         // Check if JWT is present and valid
         def identifier = jwt()
 
-        if(!identifier)
+        if (!identifier)
             return
 
         // Uses the Identifier in order to get the CartId
-        identifier = request.JSON.cartId ?: identifier
+        identifier = request.JSON['cartId'] ?: identifier
 
         // Check if the jSON contains the cart Identifier
         if (!identifier) {
             response.status = 400
 
-            respond(message: 'Invalid Identifier or no Identifier supplied')
+            [message: 'Invalid Identifier or no Identifier supplied']
 
             return
         }
@@ -308,7 +302,7 @@ class CartController {
         if (!cart) {
             response.status = 404
 
-            respond(message: 'Cart not Found. Ensure that the Identifier it\'s correct.')
+            [message: 'Cart not Found. Ensure that the Identifier it\'s correct.']
 
             return
         }
@@ -319,9 +313,7 @@ class CartController {
         // Here happens some really bad workarounds (made because I hadn't time)
         cart.items.removeAll { it ->
             // Get current Product Item
-            def url = (productsApi + 'product?id=' + it.productId) as String
-
-            def product = builder.get(url, [:])
+            def product = builder.get(productsApi.path('product').query('id={productId}').buildAndExpand(it.productId).toUriString(), [:])
 
             product.json instanceof JSONObject
 
@@ -330,19 +322,21 @@ class CartController {
                 return true
 
             // Check if amount it's valid, if not sadly removing this product.
-            if (product.json.stock[0] < it.amount)
+            if (product.json.stock && product.json.stock[0] < it.amount)
                 return true
 
             finalPrice += (product.json.price[0] * it.amount).toFloat()
 
-            // All right.
-            def jsonText = '{"productId": "' + it.productId + '","details": "' + cart.customer + ' is ordering it.","amount": -' + it.amount + '}'
+            // Creating JsonBuilder
+            def json = new JsonBuilder()
 
-            url = (productsApi + 'product/stock') as String
-
-            builder.post(url) {
+            builder.post(productsApi.path('product/stock').build().toUriString()) {
                 contentType "application/json"
-                json jsonText
+                json (json {
+                    "productId" it.productId
+                    "details" cart.customer + ' is ordering it.'
+                    "amount" '-' + (it.amount as String)
+                })
             }
 
             return false
@@ -357,7 +351,7 @@ class CartController {
 
         cart.delete flush: true
 
-        respond(message: cart.customer + ', thanks for ordering with us.', boughtItems: items, boughtWith: cart.card, finalPrice: 'USD: ' + finalPrice)
+        [message: cart.customer + ', thanks for ordering with us.', boughtItems: items, boughtWith: cart.card, finalPrice: 'USD: ' + finalPrice]
     }
 
     /**
@@ -374,7 +368,7 @@ class CartController {
         if (!authorization) {
             response.status = 403
 
-            respond(message: 'You didn\'t provided a Token')
+            [message: 'You didn\'t provided a Token']
 
             return false
         }
@@ -387,7 +381,7 @@ class CartController {
             if (claims.getExpiration() < new Date()) {
                 response.status = 403
 
-                respond(message: 'Your Token has expired')
+                [message: 'Your Token has expired']
 
                 return false
             }
@@ -396,7 +390,7 @@ class CartController {
         } catch (Exception ignored) { // We have an invalid JWT here!
             response.status = 403
 
-            respond(message: 'Invalid given JWT Token.')
+            [message: 'Invalid given JWT Token.']
 
             return false
         }

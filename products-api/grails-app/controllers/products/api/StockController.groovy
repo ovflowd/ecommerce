@@ -44,21 +44,21 @@ class StockController {
     @Transactional
     def save() {
         // Verifies if the Product Id parameter exists on the Body
-        if (!request.JSON.productId) {
+        if (!request.JSON['productId']) {
             response.status = 400
 
-            respond(mesage: 'Invalid Identifier or no Identifier supplied')
+            [mesage: 'Invalid Identifier or no Identifier supplied']
 
             return
         }
 
-        def product = Product.get(request.JSON.productId as Serializable)
+        def product = Product.get(request.JSON['productId'] as Serializable)
 
         // Verifies if the Product Exists
         if (!product) {
             response.status = 404
 
-            respond(message: 'Product not Found. Ensure that the Identifier it\'s correct.')
+            [message: 'Product not Found. Ensure that the Identifier it\'s correct.']
 
             return
         }
@@ -71,7 +71,7 @@ class StockController {
         if (!stock.validate()) {
             response.status = 405
 
-            respond(message: 'Invalid Input. Check your jSON.')
+            [message: 'Invalid Input. Check your jSON.']
 
             return
         }
@@ -84,7 +84,7 @@ class StockController {
         if (sum < 0) {
             response.status = 405
 
-            respond(message: 'Invalid Input. Final Amount cannot be less than zero.')
+            [message: 'Invalid Input. Final Amount cannot be less than zero.']
 
             return
         }
@@ -95,6 +95,6 @@ class StockController {
 
         product.save flush: true
 
-        respond(message: 'Stock Entry registered with Success', id: stock.id)
+        [message: 'Stock Entry registered with Success', id: stock.id]
     }
 }

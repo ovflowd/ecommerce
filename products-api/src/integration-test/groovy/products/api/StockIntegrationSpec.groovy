@@ -4,12 +4,6 @@ import grails.test.mixin.integration.Integration
 import grails.transaction.*
 import spock.lang.*
 
-/**
- * Stock Specification Test
- *
- * Just verifies if the Stock Entity has a normal behaviour
- */
-
 @Integration
 @Rollback
 class StockIntegrationSpec extends Specification {

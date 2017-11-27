@@ -49,10 +49,10 @@ class ProductsController {
         def product = Product.create()
 
         // Check if either price property exists and is a valid float
-        if(!request.JSON.price || (request.JSON.price % 1) == 0) {
+        if (!request.JSON['price'] || (request.JSON['price'] % 1) == 0) {
             response.status = 405
 
-            respond(message: 'Invalid Input. Price isn\'t a valid float number.')
+            [message: 'Invalid Input. Price isn\'t a valid float number.']
 
             return
         }
@@ -65,16 +65,16 @@ class ProductsController {
         if (!product.validate()) {
             response.status = 405
 
-            respond(message: 'Invalid Input. Check your jSON.')
+            [message: 'Invalid Input. Check your jSON.']
 
             return
         }
 
         product.save flush: true
 
-        new Log(relatedTable: 'product', relatedElement:  product.id, details: 'A new product was registered with name: ' + product.name + ', price: ' + product.price).save()
+        new Log(relatedTable: 'product', relatedElement: product.id, details: 'A new product was registered with name: ' + product.name + ', price: ' + product.price).save()
 
-        respond(message: 'Product Registered with Success', id: product.id)
+        [message: 'Product Registered with Success', id: product.id]
     }
 
     /**
@@ -91,7 +91,7 @@ class ProductsController {
         if (!params.id) {
             response.status = 400
 
-            respond(message: 'Invalid Identifier or no Identifier supplied')
+            [message: 'Invalid Identifier or no Identifier supplied']
 
             return
         }
@@ -102,7 +102,7 @@ class ProductsController {
         if (!product) {
             response.status = 404
 
-            respond(message: 'Product not Found. Ensure that the Identifier it\'s correct.')
+            [message: 'Product not Found. Ensure that the Identifier it\'s correct.']
 
             return
         }
@@ -116,13 +116,13 @@ class ProductsController {
             respond(message: 'Invalid Input. Check your jSON')
         }
 
-        new Log(relatedTable: 'product', relatedElement:  product.id, details: 'A product was updated. new name: ' + product.name + ', new price: ' + product.price).save()
+        new Log(relatedTable: 'product', relatedElement: product.id, details: 'A product was updated. new name: ' + product.name + ', new price: ' + product.price).save()
 
         product.properties.editedAt = new Date()
 
         product.save flush: true
 
-        respond(message: 'Product Updated with Success')
+        [message: 'Product Updated with Success']
     }
 
     /**
@@ -138,7 +138,7 @@ class ProductsController {
         if (!params.id) {
             response.status = 400
 
-            respond(message: 'Invalid Identifier or no Identifier supplied')
+            [message: 'Invalid Identifier or no Identifier supplied']
 
             return
         }
@@ -149,15 +149,15 @@ class ProductsController {
         if (!product) {
             response.status = 404
 
-            respond(message: 'Product not Found. Ensure that the Identifier it\'s correct.')
+            [message: 'Product not Found. Ensure that the Identifier it\'s correct.']
 
             return
         }
 
-        new Log(relatedTable: 'product', relatedElement:  product.id, details: 'A product was deleted with name: ' + product.name).save()
+        new Log(relatedTable: 'product', relatedElement: product.id, details: 'A product was deleted with name: ' + product.name).save()
 
         product.delete flush: true
 
-        respond(message: 'Product Removed with Success.')
+        [message: 'Product Removed with Success.']
     }
 }
