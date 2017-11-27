@@ -1,2 +1,0 @@
-create table PRODUCT (ID varchar(255) not null, VERSION bigint not null, ADDED_AT timestamp not null, PRICE float not null, NAME varchar(255) not null, STOCK integer, EDITED_AT timestamp not null, DESCRIPTION varchar(255) default 'Product without Description' not null, primary key (ID));
-create table STOCK (ID varchar(255) not null, VERSION bigint not null, ADDED_AT timestamp, PRODUCT_ID varchar(255) not null, DETAILS varchar(255) default 'Stock Entry without Description.' not null, EDITED_AT timestamp, AMOUNT integer default 1 not null, primary key (ID));
