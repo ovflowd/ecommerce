@@ -6,6 +6,6 @@ jdk:
   - oraclejdk8
 script:
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-  - ./travis-build.sh
+  - "./travis-build.sh"
 after_success:
   - bash <(curl -s https://codecov.io/bash)
