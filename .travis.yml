@@ -6,6 +6,14 @@ jdk:
   - oraclejdk8
 script:
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-  - "./travis-build.sh"
+  - cd products-api/
+  - ./grailsw compile
+  - ./grailsw test-app
+  - ./gradlew assemble buildDockerImage
+  - cd ../purchase-api/
+  - ./grailsw compile
+  - ./grailsw test-app
+  - ./gradlew assemble buildDockerImage
+  - cd ../
 after_success:
   - bash <(curl -s https://codecov.io/bash)
