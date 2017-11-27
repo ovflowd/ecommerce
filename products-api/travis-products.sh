@@ -2,5 +2,4 @@
 
 ./grailsw compile
 ./grailsw test-app
-./gradlew cobertura
-./gradlew check jacocoTestReport
+./gradlew assemble buildDockerImage

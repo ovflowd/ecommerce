@@ -1,6 +1,11 @@
+sudo: required
 language: groovy
+services:
+  - docker
 jdk:
   - oraclejdk8
-script: "./travis-build.sh"
+script:
+  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+  - ./travis-build.sh
 after_success:
   - bash <(curl -s https://codecov.io/bash)

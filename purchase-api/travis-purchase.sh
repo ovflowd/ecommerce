@@ -2,3 +2,4 @@
 
 ./grailsw compile
 ./grailsw test-app
+./gradlew assemble buildDockerImage
