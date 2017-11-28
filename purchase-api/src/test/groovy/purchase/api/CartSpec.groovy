@@ -1,4 +1,4 @@
-package products.api
+package purchase.api
 
 import grails.test.mixin.TestFor
 import spock.lang.Specification

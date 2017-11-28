@@ -75,17 +75,15 @@ dependencies {
     profile "org.grails.profiles:rest-api"
 }
 
-task buildDockerImage(type:Exec) {
+task prepareDockerImage() {
     group = 'docker'
-    description = 'Buid Products API Docker Image'
-    commandLine 'docker', 'build', '-f', 'build/docker/Dockerfile', '-t', "products-api", 'build/docker'
+    description = 'Prepare Products API Docker Image'
 
     doFirst {
-        println ">> Creating image: products-api"
         /* copy the generate war file to /build/docker/app */
         copy {
             from war.archivePath
-            into 'build/docker/app/'r
+            into 'build/docker/app/'
         }
         /* copy artifacts from src/main/docker/app into the build/docker/app */
         copy {

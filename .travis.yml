@@ -1,3 +1,6 @@
+env:
+  global:
+    - COMMIT=${TRAVIS_COMMIT::8}
 sudo: required
 language: groovy
 services:
@@ -5,15 +8,23 @@ services:
 jdk:
   - oraclejdk8
 script:
-  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+  - docker login -e $DOCKER_EMAIL -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
   - cd products-api/
   - ./grailsw compile
   - ./grailsw test-app
-  - ./gradlew assemble buildDockerImage
+  - ./gradlew assemble prepareDockerImage
+  - docker build -f build/docker/Dockerfile -t products-api build/docker
+  - docker tag sant0ro/products-api:$COMMIT sant0ro/products-api:master
+  - docker tag sant0ro/products-api:$COMMIT sant0ro/products-api:travis-$TRAVIS_BUILD_NUMBER
+  - docker push sant0ro/products-api
   - cd ../purchase-api/
   - ./grailsw compile
   - ./grailsw test-app
-  - ./gradlew assemble buildDockerImage
+  - ./gradlew assemble prepareDockerImage
+  - docker build -f build/docker/Dockerfile -t purchase-api build/docker
+  - docker tag sant0ro/purchase-api:$COMMIT sant0ro/purchase-api:master
+  - docker tag sant0ro/purchase-api:$COMMIT sant0ro/purchase-api:travis-$TRAVIS_BUILD_NUMBER
+  - docker push sant0ro/purchase-api
   - cd ../
 after_success:
   - bash <(curl -s https://codecov.io/bash)
