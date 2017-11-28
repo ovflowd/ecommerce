@@ -104,7 +104,7 @@ You can change those credentials in the `application.yaml` file. In production e
 
 **Note.:** In all Development and Test Scenarios, eCommerce uses **H2** in-memory Database.
 
-**Note.:** You can change Database Credentials, Server Running Port for each API on it's `application.yaml` file, available inside the `grails-app/conf` folder of each API.
+**Note.:** You can change your database credentials both for development/test and production scenarios in the `app-config.yml` available on each API sources root. Those configuration files can be used also externally, after building the `.jar`
 
 **Note.:** You also can clean the sources and rebuild the sources by running `grailsw clean`
 
