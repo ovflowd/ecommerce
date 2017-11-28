@@ -2,6 +2,7 @@ package purchase.api
 
 import grails.converters.JSON
 import grails.transaction.Transactional
+import groovy.json.JsonBuilder
 import groovy.time.TimeCategory
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
@@ -28,19 +29,19 @@ class CartController extends RestController {
      */
     def index() {
         // Check if any of the criteria it's used on the query string
-        JSON.use("deep") {
-            [Cart.createCriteria().list(params) {
-                if (params.name) {
-                    or { eq('customer', params.name) }
-                }
-                if (params.email) {
-                    or { eq('email', params.email) }
-                }
-                if (params.id) {
-                    or { eq('id', params.id) }
-                }
-            }]
-        }
+        JSON.use('deep')
+
+        render Cart.createCriteria().list(params) {
+            if (params.name) {
+                or { eq('customer', params.name) }
+            }
+            if (params.email) {
+                or { eq('email', params.email) }
+            }
+            if (params.id) {
+                or { eq('id', params.id) }
+            }
+        } as JSON
     }
 
     /**
@@ -60,20 +61,20 @@ class CartController extends RestController {
         if (!cart.validate()) {
             response.status = 405
 
-            respond message: 'Invalid Input. Check your jSON.', 'error': cart.errors
+            respond message: 'Invalid Input. Check your jSON.', 'error': cart.errors.fieldError.field
 
             return
         }
 
         // Set the Expire Time of the Token from the Given Configuration
         use(TimeCategory) {
-            cart.expiresOn = grailsApplication.config.purchaseApi.expireTime.seconds.from.now
+            cart.expiresOn = config().purchaseApi.expireTime.seconds.from.now
         }
 
         cart.save flush: true
 
         // Generate the JWT Token
-        def token = Jwts.builder().setId(cart.id).setExpiration(cart.expiresOn).setSubject(cart.customer).signWith(SignatureAlgorithm.HS256, jwtSignature).compact()
+        def token = Jwts.builder().setId(cart.id).setExpiration(cart.expiresOn).setSubject(cart.customer).signWith(SignatureAlgorithm.HS256, jwtSignature()).compact()
 
         respond message: 'Cart Added with Success', id: cart.id, token: token
     }
@@ -143,12 +144,12 @@ class CartController extends RestController {
             return
         }
 
-        def product = builder.get(productsApi.path('product').query('id={productId}').buildAndExpand(request.JSON['productId'] as Integer).toUriString(), [:])
+        def product = builder().get(productsApi().path('product').query('id={productId}').buildAndExpand([productId: request.JSON['productId'] as String]).toUriString())
 
         product.json instanceof JSONObject
 
         // Check if the Product really exists
-        if (!product.json.any()) {
+        if (!product.json.any() || product.status == 404) {
             response.status = 404
 
             respond message: 'Product doesn\'t exists. Verify your productId.'
@@ -156,8 +157,11 @@ class CartController extends RestController {
             return
         }
 
+        // Get jSON content aka Product
+        product = product.json[0]
+
         // Check if we have the necessary amount for it
-        if (product.json.stock && product.json.stock[0] < request.JSON['amount']) {
+        if (!product.stock || product.stock < request.JSON['amount']) {
             response.status = 405
 
             respond message: 'The Product has an insufficient amount. Please try order in a different amount.'
@@ -309,26 +313,29 @@ class CartController extends RestController {
 
         // Iterate through all Product Items and do some validations
         // Here happens some really bad workarounds (made because I hadn't time)
-        cart.items.removeAll { it ->
+        cart.items.removeAll { ite ->
             // Get current Product Item
-            def product = builder.get(productsApi.path('product').query('id={productId}').buildAndExpand(it.productId).toUriString(), [:])
-
-            product.json instanceof JSONObject
+            def product = builder().get(productsApi().path('product').query('id={productId}').buildAndExpand([productId: ite.productId]).toUriString())
 
             // Check if it still exists, if not sadly removing this product.
             if (!product.json.any())
                 return true
 
+            // Get First Element
+            product = product.json[0]
+
             // Check if amount it's valid, if not sadly removing this product.
-            if (product.json.stock && product.json.stock[0] < it.amount)
+            if (!product.stock || product.stock < ite.amount)
                 return true
 
-            finalPrice += (product.json.price[0] * it.amount).toFloat()
+            if (!product.price || product.price <= 0)
+                return true
 
+            finalPrice += (product.price * ite.amount).toFloat()
 
-            builder.post(productsApi.path('product/stock').build().toUriString()) {
-                contentType "application/json"
-                json([productId: it.productId, details: cart.customer + ' is ordering it.', amount: '-' + (it.amount as String)])
+            builder().post(productsApi().path('product/stock').build().toUriString()) {
+                contentType 'application/json'
+                json([productId: ite.productId, details: cart.customer + ' is ordering it.', amount: -ite.amount])
             }
 
             return false
@@ -367,7 +374,7 @@ class CartController extends RestController {
 
         try {
             // Tries to decode the JWT token
-            Claims claims = Jwts.parser().setSigningKey(jwtSignature).parseClaimsJws(authorization).getBody() as Claims
+            Claims claims = Jwts.parser().setSigningKey(jwtSignature()).parseClaimsJws(authorization).getBody() as Claims
 
             // Check if the Token hasn't expired
             if (claims.getExpiration() < new Date()) {

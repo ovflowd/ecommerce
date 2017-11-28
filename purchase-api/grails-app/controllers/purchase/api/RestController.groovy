@@ -1,21 +1,28 @@
 package purchase.api
 
+import grails.config.Config
 import grails.plugins.rest.client.RestBuilder
 import org.springframework.web.util.UriComponentsBuilder
 
 abstract class RestController {
+    // Get an Instance of RestBuilder
+    RestBuilder builder() {
+        RestBuilder.newInstance()
+    }
 
-    RestBuilder builder
-    UriComponentsBuilder productsApi
-    String jwtSignature
+    // Get actual Grails Application Config
+    Config config() {
+        grailsApplication.config
+    }
 
-    RestController() {
-        // Set the productAPI URI Builder
-        productsApi = UriComponentsBuilder.newInstance().scheme(grailsApplication.config.productsApi.protocol as String)
-                .host(grailsApplication.config.productsApi.hostname as String).port(grailsApplication.config.productsApi.port as Integer)
-        // Generate the JWT Signature
-        jwtSignature = grailsApplication.config.purchaseApi.jwtHash as String
-        // Instantiate the RestBuilder
-        builder = new RestBuilder()
+    // Get Products API URI Builder
+    UriComponentsBuilder productsApi() {
+        UriComponentsBuilder.newInstance().scheme(config().productsApi.protocol as String)
+                .host(config().productsApi.hostname as String).port(config().productsApi.port as Integer)
+    }
+
+    // Get JWT Signature Builder
+    String jwtSignature() {
+        grailsApplication.config.purchaseApi.jwtHash as String
     }
 }
