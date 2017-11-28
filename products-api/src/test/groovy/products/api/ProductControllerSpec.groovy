@@ -1,5 +1,6 @@
 package products.api
 
+import grails.converters.JSON
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import org.springframework.test.annotation.Rollback
@@ -36,7 +37,7 @@ class ProductControllerSpec extends Specification {
     void 'test creating product'() {
         when:
             request.method = 'POST'
-            request.json = new Product(name: 'A stocked Product', price: 2.20)
+            request.json = new Product(name: 'A stocked Product', price: 2.20) as JSON
             controller.save()
         then:
             response.status == 200
@@ -45,7 +46,7 @@ class ProductControllerSpec extends Specification {
     void 'test creating an invalid product'() {
         when:
             request.method = 'POST'
-            request.json = new Product(name: 'A stocked Product', price: -20)
+            request.json = new Product(name: 'A stocked Product', price: -20) as JSON
             controller.save()
         then:
             response.status == 405
@@ -57,7 +58,7 @@ class ProductControllerSpec extends Specification {
         when:
             request.method = 'PUT'
             controller.params.id = Product.first().id
-            request.json = new Product(name: 'A stocked Product', price: 4.00)
+            request.json = new Product(name: 'A stocked Product', price: 4.00) as JSON
             controller.update()
         then:
             response.status == 200
@@ -69,7 +70,7 @@ class ProductControllerSpec extends Specification {
         when:
             request.method = 'PUT'
             controller.params.id = Math.random()
-            request.json = new Product(name: 'A stocked Product', price: 4.00)
+            request.json = new Product(name: 'A stocked Product', price: 4.00) as JSON
             controller.update()
         then:
             response.status == 404

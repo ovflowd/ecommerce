@@ -1,5 +1,6 @@
 package products.api
 
+import grails.converters.JSON
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import org.springframework.test.annotation.Rollback
@@ -11,7 +12,7 @@ import spock.lang.Specification
 class StockControllerSpec extends Specification {
     void setupData() {
         Product.saveAll(new Product(name: 'A stocked Product', price: 2.20))
-        Product.first().id = UUID.randomUUID().toString().replaceAll('-', '')
+        Product.first().id = UUID.randomUUID().toString().replaceAll('-', '') // A little bit Hacky
         Product.first().save()
         Stock.saveAll(new Stock(productId: Product.first().id, details: 'A beautiful stock', amount: 20))
     }
@@ -31,7 +32,7 @@ class StockControllerSpec extends Specification {
             setupData()
         when:
             request.method = 'POST'
-            request.json = new Stock(productId: Product.first().id, details: 'Added 20 amount for stock', amount: 20)
+            request.json = new Stock(productId: Product.first().id, details: 'Added 20 amount for stock', amount: 20) as JSON
             controller.save()
         then:
             response.status == 200
@@ -42,7 +43,7 @@ class StockControllerSpec extends Specification {
             setupData()
         when:
             request.method = 'POST'
-            request.json = new Stock(productId: Product.first().id, details: 'Deleted 20 amount of stock', amount: -20)
+            request.json = new Stock(productId: Product.first().id, details: 'Deleted 20 amount of stock', amount: -20) as JSON
             controller.save()
         then:
             response.status == 200
@@ -53,7 +54,7 @@ class StockControllerSpec extends Specification {
             setupData()
         when:
             request.method = 'POST'
-            request.json = new Stock(productId: Product.first().id, details: 'Deleted 20 amount of stock', amount: -40)
+            request.json = new Stock(productId: Product.first().id, details: 'Deleted 20 amount of stock', amount: -40) as JSON
             controller.save()
         then:
             response.status == 405

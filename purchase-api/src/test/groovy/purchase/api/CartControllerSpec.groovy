@@ -1,16 +1,17 @@
 package purchase.api
 
+import grails.converters.JSON
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import org.springframework.test.annotation.Rollback
 import spock.lang.*
 
 @TestFor(CartController)
-@Mock([Item])
+@Mock([Cart])
 @Rollback
 class CartControllerSpec extends Specification {
     void setupData() {
-        Cart.saveAll(new Cart(customer: 'Bad Ass', email: 'valid@email.org', card: 'im-not-giving-my-card-to-you'))
+        Cart.saveAll(new Cart(customer: 'Bad Ass', email: 'valid@email.org', card: '4716930483418849'))
     }
 
     void 'test listing existent carts'() {
@@ -26,7 +27,7 @@ class CartControllerSpec extends Specification {
     void 'test creating cart'() {
         when:
             request.method = 'POST'
-            request.json = new Cart(customer: 'Bad Ass', email: 'valid@email.org', card: 'im-not-giving-my-card-to-you')
+            request.json = new Cart(customer: 'Bad Ass', email: 'valid@email.org', card: '4716930483418849') as JSON
             controller.create()
         then:
             response.status == 200
@@ -35,7 +36,7 @@ class CartControllerSpec extends Specification {
     void 'test creating an invalid cart cart'() {
         when:
             request.method = 'POST'
-            request.json = new Cart(email: 'valid@email.org')
+            request.json = new Cart(email: 'valid@email.org') as JSON
             controller.create()
         then:
             response.status == 405

@@ -17,8 +17,7 @@ class ItemDomainSpec extends Specification {
 
     void 'test if cart constraint works works'() {
         when:
-            Cart cart = null
-            def item = new Item(productId: '8a8a81e85db13efe015db13f15750000', amount: 20, cartId: cart).save()
+            def item = new Item(productId: '8a8a81e85db13efe015db13f15750000', amount: 20, cartId: null).save()
         then:
             !item
     }
