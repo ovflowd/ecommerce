@@ -22,8 +22,7 @@ class StockController {
             if (params.name) {
                 or {
                     eq('productId', Product.where {
-                        name:
-                        params.name
+                        name: params.name
                     }.first().id)
                 }
             }

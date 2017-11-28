@@ -35,7 +35,7 @@ environments:
 grails:
   profile: rest-api
   codegen:
-    defaultPackage: grails
+    defaultPackage: products.api
   spring:
     transactionManagement:
       proxies: false
