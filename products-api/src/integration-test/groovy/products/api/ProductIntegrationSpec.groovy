@@ -7,6 +7,10 @@ import spock.lang.*
 @Integration
 @Rollback
 class ProductIntegrationSpec extends Specification {
+    void setup() {
+        Product.findAll().each { it.delete() }
+    }
+
     void 'test if registering data with normal behaviour works'() {
         when: 'A real normal product being registered...'
             new Product(name: 'A normal and sad product', description: 'We should not care with it.', price: 2.20).save(flush: true)

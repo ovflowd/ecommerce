@@ -7,6 +7,11 @@ import spock.lang.*
 @Integration
 @Rollback
 class StockIntegrationSpec extends Specification {
+    void setup() {
+        Product.findAll().each { it.delete() }
+        Stock.findAll().each { it.delete() }
+    }
+
     void setupData() {
         Product.saveAll(new Product(name: 'A stocked Product', price: 2.20))
     }
