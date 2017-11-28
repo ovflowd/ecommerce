@@ -11,14 +11,14 @@ script:
   - docker login -e $DOCKER_EMAIL -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
   - cd products-api/
   - ./grailsw compile
-  - ./grailsw test-app
+  - ./grailsw test-app -unit
   - ./gradlew assemble prepareDockerImage
   - docker build -f build/docker/Dockerfile -t products-api build/docker
   - docker tag products-api sant0ro/products-api
   - docker push sant0ro/products-api
   - cd ../purchase-api/
   - ./grailsw compile
-  - ./grailsw test-app
+  - ./grailsw test-app -unit
   - ./gradlew assemble prepareDockerImage
   - docker build -f build/docker/Dockerfile -t purchase-api build/docker
   - docker tag purchase-api sant0ro/purchase-api
