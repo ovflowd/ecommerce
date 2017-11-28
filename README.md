@@ -1,7 +1,7 @@
 ![](http://imgur.com/t3teAxi.png)
 ### :handbag: A simple RESTful API for Purchases and Products
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Github All Releases](https://img.shields.io/github/downloads/sant0ro/eCommerce/total.svg)]() [![GitHub release](https://img.shields.io/github/release/sant0ro/eCommerce.svg)]() [![Build Status](https://travis-ci.org/sant0ro/eCommerce.svg?branch=master)](https://travis-ci.org/sant0ro/eCommerce) [![Codecov](https://img.shields.io/codecov/c/github/sant0ro/eCommerce.svg)]()
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Github All Releases](https://img.shields.io/github/downloads/sant0ro/eCommerce/total.svg)]() [![GitHub release](https://img.shields.io/github/release/sant0ro/eCommerce.svg)]() [![Build Status](https://travis-ci.org/sant0ro/eCommerce.svg?branch=master)](https://travis-ci.org/sant0ro/eCommerce) [![Codecov](https://img.shields.io/codecov/c/github/sant0ro/eCommerce.svg)]() [![Docker Build Status](https://img.shields.io/docker/build/sant0ro/products-api.svg)]() [![Docker Build Status](https://img.shields.io/docker/build/sant0ro/purchase-api.svg)]()
 
 ## Deploy
 
