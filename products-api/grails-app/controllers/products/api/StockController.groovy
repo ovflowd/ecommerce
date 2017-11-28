@@ -94,6 +94,8 @@ class StockController {
 
         product.save flush: true
 
+        new Log(relatedTable: 'stock', relatedElement: product.id, details: 'The stock of the product ' + product.name + ', was updated to the value of: ' + sum).save()
+
         respond message: 'Stock Entry registered with Success', id: stock.id
     }
 }
