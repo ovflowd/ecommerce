@@ -31,12 +31,15 @@ class ProductFunctionalSpec extends GebSpec {
 
     void 'Test Removing a Product'() {
         when: 'Creating a Product and Deleting a new Product'
-            def productResp = rest().post("$baseUrl/product") {
+            def createRes = rest().post("$baseUrl/product") {
                 contentType 'application/json'
                 json([name: 'A Happy Product', price: 20.2])
             }
-            def resp = rest().delete("$baseUrl/product?id={productId}", [productId: productResp.json.id])
+            def deleteResp = rest().delete("$baseUrl/product/{productId}") {
+                urlVariables productId: createRes.json.id
+            }
         then: 'We will receive a success status code'
-            resp.status == 200
+            createRes.status == 200
+            deleteResp.status == 200
     }
 }
