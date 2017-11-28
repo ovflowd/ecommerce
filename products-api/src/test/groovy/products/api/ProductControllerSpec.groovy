@@ -7,7 +7,7 @@ import org.springframework.test.annotation.Rollback
 import spock.lang.*
 
 @TestFor(ProductsController)
-@Mock([Product])
+@Mock([Product, Log])
 @Rollback
 class ProductControllerSpec extends Specification {
     void setupData() {
