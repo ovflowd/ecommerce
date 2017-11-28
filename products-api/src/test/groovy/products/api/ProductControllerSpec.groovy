@@ -17,20 +17,20 @@ class ProductControllerSpec extends Specification {
         given:
             setupData()
         when:
-            params.price = 2.20
+            controller.params.id = Product.first().id
             controller.index()
         then:
-            response.json != []
+            response.text != '[]'
     }
 
     void 'test listing non existent products'() {
         given:
             setupData()
         when:
-            params.name = 'My Little Pony 20 sticker Pack'
+            controller.params.name = 'My Little Pony 20 sticker Pack'
             controller.index()
         then:
-            response.json == []
+            response.text == '[]'
     }
 
     void 'test creating product'() {
@@ -56,7 +56,7 @@ class ProductControllerSpec extends Specification {
             setupData()
         when:
             request.method = 'PUT'
-            params.id = Product.first().id
+            controller.params.id = Product.first().id
             request.json = new Product(name: 'A stocked Product', price: 4.00)
             controller.update()
         then:
@@ -68,7 +68,7 @@ class ProductControllerSpec extends Specification {
             setupData()
         when:
             request.method = 'PUT'
-            params.id = Math.random()
+            controller.params.id = Math.random()
             request.json = new Product(name: 'A stocked Product', price: 4.00)
             controller.update()
         then:
@@ -80,7 +80,7 @@ class ProductControllerSpec extends Specification {
             setupData()
         when:
             request.method = 'DELETE'
-            params.id = Product.first().id
+            controller.params.id = Product.first().id
             controller.delete()
         then:
             response.status == 200
@@ -91,7 +91,7 @@ class ProductControllerSpec extends Specification {
             setupData()
         when:
             request.method = 'DELETE'
-            params.id = Math.random()
+            controller.params.id = Math.random()
             controller.delete()
         then:
             response.status == 404
