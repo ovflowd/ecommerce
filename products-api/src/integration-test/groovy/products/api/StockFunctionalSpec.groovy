@@ -23,7 +23,7 @@ class StockFunctionalSpec extends GebSpec {
         when: 'Creating a new Product and Stock Entry'
             def productResp = rest().post("$baseUrl/product") {
                 contentType 'application/json'
-                json ([name: 'A Happy Product', price: 20.2])
+                json ([name: 'A Happy Product', price: 20.20])
             }
             def stockResp = rest().post("$baseUrl/product/stock") {
                 contentType 'application/json'

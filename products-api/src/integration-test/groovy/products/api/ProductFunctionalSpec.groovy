@@ -23,7 +23,7 @@ class ProductFunctionalSpec extends GebSpec {
         when: 'Creating a new Product'
             def resp = rest().post("$baseUrl/product") {
                 contentType 'application/json'
-                json ([name: 'A Happy Product', price: 20.2])
+                json ([name: 'A Happy Product', price: 20.20])
             }
         then: 'We will receive a success status code'
             resp.status == 200
@@ -33,7 +33,7 @@ class ProductFunctionalSpec extends GebSpec {
         when: 'Creating a Product and Deleting a new Product'
             def createRes = rest().post("$baseUrl/product") {
                 contentType 'application/json'
-                json([name: 'A Happy Product', price: 20.2])
+                json([name: 'A Happy Product', price: 20.20])
             }
             def deleteResp = rest().delete("$baseUrl/product/{productId}") {
                 urlVariables productId: createRes.json.id

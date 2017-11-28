@@ -58,7 +58,7 @@ class ProductControllerSpec extends Specification {
         when:
             request.method = 'PUT'
             controller.params.id = Product.first().id
-            request.json = new Product(name: 'A stocked Product', price: 4.00) as JSON
+            request.json = new Product(name: 'A stocked Product', price: 4.20) as JSON
             controller.update()
         then:
             response.status == 200
@@ -70,7 +70,7 @@ class ProductControllerSpec extends Specification {
         when:
             request.method = 'PUT'
             controller.params.id = Math.random()
-            request.json = new Product(name: 'A stocked Product', price: 4.00) as JSON
+            request.json = new Product(name: 'A stocked Product', price: 4.20) as JSON
             controller.update()
         then:
             response.status == 404

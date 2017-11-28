@@ -96,7 +96,7 @@ class ProductsController {
             return
         }
 
-        def product = Product.get(params.id as Serializable)
+        def product = Product.get(params.id as String)
 
         // Check if the Product Exists
         if (!product) {
@@ -143,7 +143,7 @@ class ProductsController {
             return
         }
 
-        def product = Product.get(params.id as Serializable)
+        def product = Product.get(params.id as String)
 
         // Check if the Product exists with the provided Identifier
         if (!product) {
