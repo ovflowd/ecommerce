@@ -47,8 +47,9 @@ If you want to **Contribute** you can submit a Pull Request, remember to READ th
 
 ## Installation
 
-**eCommerce** it's splitted into two standalone RESTful API's, so you can run it on whatever port you want. Installing **eCommerce** it's easy, the tutorial above will explain to you.
-**eCommerce** used Groovy `2.4` and Grails `3.2.11`.
+* **eCommerce** it's splitted into two standalone RESTful API's, so you can run it on whatever port you want. Installing 
+* **eCommerce** it's easy, the tutorial above will explain to you.
+* **eCommerce** uses Groovy `2.4` and Grails `3.2.11`.
 
 You can run **eCommerce** in different ways. You can go to the [Releases Page](releases/) and download the source code of the latest release, or a bundled .war or a standalone java application (.jar).
 
@@ -115,4 +116,4 @@ You can easily run the **Test Cases** using the standalone Grails package built-
 
 ## Credits
 
-This development/educational scenario was coded and created by [Claudio Santoro](http://santoro.pw) unde the **MIT License**. The objective of this repository it's as practical test of RESTful API's with Java + Groovy.
+This development/educational scenario was coded and created by [Claudio Santoro](http://santoro.pw) unde the [GNU GPL v3](LICENSE) License. The objective of this repository it's as practical test of RESTful API's with Java + Groovy.
