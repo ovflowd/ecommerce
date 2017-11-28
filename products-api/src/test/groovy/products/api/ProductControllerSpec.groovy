@@ -46,7 +46,7 @@ class ProductControllerSpec extends Specification {
     void 'test creating an invalid product'() {
         when:
             request.method = 'POST'
-            request.json = new Product(name: 'A stocked Product', price: -20) as JSON
+            request.json = new Product(name: 'A stocked Product', price: -20.0) as JSON
             controller.save()
         then:
             response.status == 405
