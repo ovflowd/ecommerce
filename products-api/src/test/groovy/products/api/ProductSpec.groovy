@@ -1,9 +1,10 @@
 package products.api
 
-import grails.testing.gorm.DomainUnitTest
+import grails.test.mixin.TestFor
 import spock.lang.Specification
 
-class ProductSpec extends Specification implements DomainUnitTest<Product> {
+@TestFor(Product)
+class ProductSpec extends Specification {
     void 'test if a normal product passes on the validation'() {
         when:
             def product = new Product(name: 'A normal sad product.', price: 2.00).save()

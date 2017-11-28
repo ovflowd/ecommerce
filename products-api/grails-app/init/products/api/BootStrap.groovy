@@ -10,10 +10,8 @@ import groovy.sql.Sql
  */
 class BootStrap {
     def init = { servletContext ->
-        // If we are on the Development Environment, let's created the tables and add some mock data.
+        // If we are on the Development Environment, let's add some mock data.
         if (Environment.current == Environment.DEVELOPMENT) {
-            // Create Tables
-            Sql.newInstance().execute(new File('src/main/sql/products-api.sql').text)
             // We add some Products
             def javaProduct = new Product(name: 'Java for Dummies (For Dummies (Computers))', description: '6th ed. Edition - by Barry Burd PH.D.', price: 36.34).save()
             def linkedinProduct = new Product(name: 'Linkedin Premium Subscription', description: 'A voucher for a single month Linkedin Career Premium Subscription', price: 15.6).save()
@@ -26,11 +24,6 @@ class BootStrap {
             // Since we're not in a Controller we need manually set the amount of stock
             javaProduct.properties.stock = 20
             linkedinProduct.properties.stock = 20000
-        }
-        // If we are on the Development Environment, let's create the tables
-        if (Environment.current == Environment.TEST) {
-            // Create Tables
-            Sql.newInstance().execute(new File('src/main/sql/products-api.sql').text)
         }
     }
 

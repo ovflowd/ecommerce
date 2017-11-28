@@ -1,9 +1,10 @@
 package products.api
 
-import grails.testing.gorm.DomainUnitTest
-import spock.lang.*
+import grails.test.mixin.TestFor
+import spock.lang.Specification
 
-class StockSpec extends Specification implements DomainUnitTest<Stock> {
+@TestFor(Stock)
+class StockSpec extends Specification {
     void 'test if a normal stock entry passes on the validation'() {
         when:
             def stock = new Stock(details: 'A real good stock entry.', amount: 200, productId: "54cc9bac798411e7b5a5be2e44b06b34").save()

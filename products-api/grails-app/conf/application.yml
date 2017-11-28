@@ -4,6 +4,7 @@ hibernate:
     queries: false
     use_second_level_cache: false
     use_query_cache: false
+    region.factory_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
 dataSource:
   pooled: true
   jmxExport: true
@@ -19,13 +20,13 @@ dataSourceProduction:
   password: 'commerceapi'
 environments:
   development:
-    dataSourceProduction:
+    dataSource:
       dbCreate: create-drop
-      url: dbc:mysql://127.0.0.1:3306/productsapi
+      url: jdbc:h2:mem:productsDev;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
   test:
-    dataSourceProduction:
+    dataSource:
       dbCreate: update
-      url: dbc:mysql://127.0.0.1:3306/productsapi
+      url: jdbc:h2:mem:productsTest;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
   production:
     dataSourceProduction:
       dbCreate: none
@@ -39,6 +40,7 @@ grails:
     transactionManagement:
       proxies: false
   gorm:
+    autowire: false
     reactor:
       events: false
 info:

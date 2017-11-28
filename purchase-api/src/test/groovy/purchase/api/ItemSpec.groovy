@@ -1,9 +1,10 @@
 package purchase.api
 
-import grails.testing.gorm.DomainUnitTest
+import grails.test.mixin.TestFor
 import spock.lang.Specification
 
-class ItemSpec extends Specification implements DomainUnitTest<Item> {
+@TestFor(Item)
+class ItemSpec extends Specification {
     void 'test if the productId validation works'() {
         when:
             def cart = new Cart(customer: 'Someone Told', email: 'bad-ass@world.org', card: '4716930483418849').save()

@@ -1,7 +1,7 @@
 package products.api
 
-import grails.testing.mixin.integration.Integration
-import grails.gorm.transactions.*
+import grails.test.mixin.integration.Integration
+import grails.transaction.Rollback
 import spock.lang.*
 
 @Integration

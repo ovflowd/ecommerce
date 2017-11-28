@@ -1,9 +1,10 @@
-package purchase.api
+package products.api
 
-import grails.testing.gorm.DomainUnitTest
+import grails.test.mixin.TestFor
 import spock.lang.Specification
 
-class CartSpec extends Specification implements DomainUnitTest<Cart> {
+@TestFor(Cart)
+class CartSpec extends Specification {
     void 'test if the credit card validation works'() {
         when:
             def cart = new Cart(customer: 'Bad Ass', email: 'valid@email.org', card: 'im-not-giving-my-card-to-you').save()
