@@ -14,16 +14,14 @@ script:
   - ./grailsw test-app
   - ./gradlew assemble prepareDockerImage
   - docker build -f build/docker/Dockerfile -t products-api build/docker
-  - docker tag sant0ro/products-api:$COMMIT sant0ro/products-api:master
-  - docker tag sant0ro/products-api:$COMMIT sant0ro/products-api:travis-$TRAVIS_BUILD_NUMBER
+  - docker tag sant0ro/products-api sant0ro/products-api
   - docker push sant0ro/products-api
   - cd ../purchase-api/
   - ./grailsw compile
   - ./grailsw test-app
   - ./gradlew assemble prepareDockerImage
   - docker build -f build/docker/Dockerfile -t purchase-api build/docker
-  - docker tag sant0ro/purchase-api:$COMMIT sant0ro/purchase-api:master
-  - docker tag sant0ro/purchase-api:$COMMIT sant0ro/purchase-api:travis-$TRAVIS_BUILD_NUMBER
+  - docker tag sant0ro/purchase-api sant0ro/purchase-api
   - docker push sant0ro/purchase-api
   - cd ../
 after_success:
