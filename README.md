@@ -48,6 +48,7 @@ If you want to **Contribute** you can submit a Pull Request, remember to READ th
 ## Installation
 
 **eCommerce** it's splitted into two standalone RESTful API's, so you can run it on whatever port you want. Installing **eCommerce** it's easy, the tutorial above will explain to you.
+**eCommerce** used Groovy `2.4` and Grails `3.2.11`.
 
 You can run **eCommerce** in different ways. You can go to the [Releases Page](releases/) and download the source code of the latest release, or a bundled .war or a standalone java application (.jar).
 
@@ -61,11 +62,11 @@ If you want run the standalone `.jar` just download it, and open your CMD/Termin
 
 **If you want RUN the Products API**
 
-`java -jar ecommerce-products-api-XXX.jar`
+`java -jar ecommerce-products-api-XXX.jar` **OR** `./products-api/grailsw run-app`
 
 **If you want RUN the Purchases API**
 
-`java -jar ecommerce-purchase-api-XXX.jar`
+`java -jar ecommerce-purchase-api-XXX.jar` **OR** `./purchase-api/grailsw run-app`
 
 You also can build from the sources by running the **Grails Console**, just went to one of the API's folder `purchase-api` or `products-api` and write on your CMD/Terminal the following:
 
@@ -86,6 +87,8 @@ If you want to run it in development scenario, you can also do it by **building*
 Production Environments are focused in being ready. That means, you just need execute the Jar File.
 
 In the Production Environment all eCommerce API's are configured to work with **MySQL** in two databases; **productsAPI** and **purchaseAPI** and to work with a default **username and password** combination:
+
+**Note.:** Remember importing each SQL files, if using MySQL for Production. You can find them inside `products-api/src/main/sql/` and `purchase-api/src/main/sql/`
 
 * **Username:** commerce
 * **Password:** commerceapi
