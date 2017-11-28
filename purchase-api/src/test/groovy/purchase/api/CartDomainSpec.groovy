@@ -4,7 +4,7 @@ import grails.test.mixin.TestFor
 import spock.lang.Specification
 
 @TestFor(Cart)
-class CartSpec extends Specification {
+class CartDomainSpec extends Specification {
     void 'test if the credit card validation works'() {
         when:
             def cart = new Cart(customer: 'Bad Ass', email: 'valid@email.org', card: 'im-not-giving-my-card-to-you').save()

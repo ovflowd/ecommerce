@@ -46,7 +46,7 @@ class StockController {
         if (!request.JSON['productId']) {
             response.status = 400
 
-            [mesage: 'Invalid Identifier or no Identifier supplied']
+            respond mesage: 'Invalid Identifier or no Identifier supplied'
 
             return
         }
@@ -57,7 +57,7 @@ class StockController {
         if (!product) {
             response.status = 404
 
-            [message: 'Product not Found. Ensure that the Identifier it\'s correct.']
+            respond message: 'Product not Found. Ensure that the Identifier it\'s correct.'
 
             return
         }
@@ -70,7 +70,7 @@ class StockController {
         if (!stock.validate()) {
             response.status = 405
 
-            [message: 'Invalid Input. Check your jSON.']
+            respond message: 'Invalid Input. Check your jSON.', 'error': product.errors.fieldError.field
 
             return
         }
@@ -83,7 +83,7 @@ class StockController {
         if (sum < 0) {
             response.status = 405
 
-            [message: 'Invalid Input. Final Amount cannot be less than zero.']
+            respond message: 'Invalid Input. Final Amount cannot be less than zero.'
 
             return
         }
@@ -94,6 +94,6 @@ class StockController {
 
         product.save flush: true
 
-        [message: 'Stock Entry registered with Success', id: stock.id]
+        respond message: 'Stock Entry registered with Success', id: stock.id
     }
 }

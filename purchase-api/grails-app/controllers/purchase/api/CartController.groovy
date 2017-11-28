@@ -1,9 +1,7 @@
 package purchase.api
 
 import grails.converters.JSON
-import grails.plugins.rest.client.RestBuilder
 import grails.transaction.Transactional
-import groovy.json.JsonBuilder
 import groovy.time.TimeCategory
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
@@ -62,7 +60,7 @@ class CartController extends RestController {
         if (!cart.validate()) {
             response.status = 405
 
-            [message: 'Invalid Input. Check your jSON.']
+            respond message: 'Invalid Input. Check your jSON.', 'error': cart.errors
 
             return
         }
@@ -77,7 +75,7 @@ class CartController extends RestController {
         // Generate the JWT Token
         def token = Jwts.builder().setId(cart.id).setExpiration(cart.expiresOn).setSubject(cart.customer).signWith(SignatureAlgorithm.HS256, jwtSignature).compact()
 
-        [message: 'Cart Added with Success', id: cart.id, token: token]
+        respond message: 'Cart Added with Success', id: cart.id, token: token
     }
 
     /**
@@ -93,7 +91,7 @@ class CartController extends RestController {
         if (!params.id) {
             response.status = 400
 
-            [message: 'Invalid Identifier or no Identifier supplied']
+            respond message: 'Invalid Identifier or no Identifier supplied'
 
             return
         }
@@ -104,14 +102,14 @@ class CartController extends RestController {
         if (!cart) {
             response.status = 404
 
-            [message: 'Cart not Found. Ensure that the Identifier it\'s correct.']
+            respond message: 'Cart not Found. Ensure that the Identifier it\'s correct.'
 
             return
         }
 
         cart.delete flush: true
 
-        [message: 'Cart Removed with Success.']
+        respond message: 'Cart Removed with Success.'
     }
 
     /**
@@ -140,7 +138,7 @@ class CartController extends RestController {
         if (!item.validate()) {
             response.status = 405
 
-            [message: 'Invalid Input. Check your jSON.']
+            respond message: 'Invalid Input. Check your jSON.', 'errors': item.errors.fieldError.field
 
             return
         }
@@ -153,7 +151,7 @@ class CartController extends RestController {
         if (!product.json.any()) {
             response.status = 404
 
-            [message: 'Product doesn\'t exists. Verify your productId.']
+            respond message: 'Product doesn\'t exists. Verify your productId.'
 
             return
         }
@@ -162,14 +160,14 @@ class CartController extends RestController {
         if (product.json.stock && product.json.stock[0] < request.JSON['amount']) {
             response.status = 405
 
-            [message: 'The Product has an insufficient amount. Please try order in a different amount.']
+            respond message: 'The Product has an insufficient amount. Please try order in a different amount.'
 
             return
         }
 
         item.save flush: true
 
-        [message: 'Item added to Cart with Success', id: item.id]
+        respond message: 'Item added to Cart with Success', id: item.id
     }
 
     /**
@@ -194,7 +192,7 @@ class CartController extends RestController {
         if (!params.productId || !params.amount) {
             response.status = 400
 
-            [message: 'Invalid Amount of Product Identifier given.']
+            respond message: 'Invalid Amount of Product Identifier given.'
 
             return
         }
@@ -210,7 +208,7 @@ class CartController extends RestController {
         if (!item) {
             response.status = 404
 
-            [message: 'Either Cart Identifier or Product Identifier were not found.']
+            respond message: 'Either Cart Identifier or Product Identifier were not found.'
 
             return
         }
@@ -219,7 +217,7 @@ class CartController extends RestController {
         if ((item.properties.amount - params.amount.toInteger()) <= 0) {
             item.delete flush: true
 
-            [message: 'Item was deleted with success, since the amount were zeroed']
+            respond message: 'Item was deleted with success, since the amount were zeroed'
 
             return
         }
@@ -228,7 +226,7 @@ class CartController extends RestController {
 
         item.save flush: true
 
-        [message: 'Item amount on purchase reduced', newAmount: item.properties.amount]
+        respond message: 'Item amount on purchase reduced', newAmount: item.properties.amount
     }
 
     /**
@@ -248,7 +246,7 @@ class CartController extends RestController {
         if (!params.id) {
             response.status = 400
 
-            [message: 'Invalid Identifier or no Identifier supplied']
+            respond message: 'Invalid Identifier or no Identifier supplied'
 
             return
         }
@@ -259,14 +257,14 @@ class CartController extends RestController {
         if (!item) {
             response.status = 404
 
-            [message: 'Item not Found. Ensure that the Identifier it\'s correct.']
+            respond message: 'Item not Found. Ensure that the Identifier it\'s correct.'
 
             return
         }
 
         item.delete flush: true
 
-        [message: 'Item Removed with Success.']
+        respond message: 'Item Removed with Success.'
     }
 
     /**
@@ -291,7 +289,7 @@ class CartController extends RestController {
         if (!identifier) {
             response.status = 400
 
-            [message: 'Invalid Identifier or no Identifier supplied']
+            respond message: 'Invalid Identifier or no Identifier supplied'
 
             return
         }
@@ -302,7 +300,7 @@ class CartController extends RestController {
         if (!cart) {
             response.status = 404
 
-            [message: 'Cart not Found. Ensure that the Identifier it\'s correct.']
+            respond message: 'Cart not Found. Ensure that the Identifier it\'s correct.'
 
             return
         }
@@ -327,16 +325,10 @@ class CartController extends RestController {
 
             finalPrice += (product.json.price[0] * it.amount).toFloat()
 
-            // Creating JsonBuilder
-            def json = new JsonBuilder()
 
             builder.post(productsApi.path('product/stock').build().toUriString()) {
                 contentType "application/json"
-                json (json {
-                    "productId" it.productId
-                    "details" cart.customer + ' is ordering it.'
-                    "amount" '-' + (it.amount as String)
-                })
+                json([productId: it.productId, details: cart.customer + ' is ordering it.', amount: '-' + (it.amount as String)])
             }
 
             return false
@@ -351,7 +343,7 @@ class CartController extends RestController {
 
         cart.delete flush: true
 
-        [message: cart.customer + ', thanks for ordering with us.', boughtItems: items, boughtWith: cart.card, finalPrice: 'USD: ' + finalPrice]
+        respond message: cart.customer + ', thanks for ordering with us.', boughtItems: items, boughtWith: cart.card, finalPrice: 'USD: ' + finalPrice
     }
 
     /**
@@ -368,7 +360,7 @@ class CartController extends RestController {
         if (!authorization) {
             response.status = 403
 
-            [message: 'You didn\'t provided a Token']
+            respond message: 'You didn\'t provided a Token'
 
             return false
         }
@@ -381,7 +373,7 @@ class CartController extends RestController {
             if (claims.getExpiration() < new Date()) {
                 response.status = 403
 
-                [message: 'Your Token has expired']
+                respond message: 'Your Token has expired'
 
                 return false
             }
@@ -390,7 +382,7 @@ class CartController extends RestController {
         } catch (Exception ignored) { // We have an invalid JWT here!
             response.status = 403
 
-            [message: 'Invalid given JWT Token.']
+            respond message: 'Invalid given JWT Token.'
 
             return false
         }
