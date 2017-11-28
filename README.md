@@ -5,7 +5,7 @@
 
 ## Deploy
 
-[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/sant0ro/eCommerce) [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
+<a href="https://azuredeploy.net/"><img src="http://azuredeploy.net/deploybutton.png" height="32"></a> <a href="https://bluemix.net/deploy?repository=https://github.com/sant0ro/eCommerce"><img src="https://bluemix.net/deploy/button.png" height="32"></a>
 
 ## Features
 
