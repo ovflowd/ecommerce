@@ -76,6 +76,9 @@ class CartController extends RestController {
         // Generate the JWT Token
         def token = Jwts.builder().setId(cart.id).setExpiration(cart.expiresOn).setSubject(cart.customer).signWith(SignatureAlgorithm.HS256, jwtSignature()).compact()
 
+        // Store Log Entry
+        new Log(relatedTable: 'cart', relatedElement: cart.id, details: 'Costumer ' + cart.customer + ' (' + cart.email + ') created a new cart.').save()
+
         respond message: 'Cart Added with Success', id: cart.id, token: token
     }
 
@@ -107,6 +110,9 @@ class CartController extends RestController {
 
             return
         }
+
+        // Store Log Entry
+        new Log(relatedTable: 'cart', relatedElement: cart.id, details: 'Costumer ' + cart.customer + ' (' + cart.email + ') deleted his cart.').save()
 
         cart.delete flush: true
 
@@ -168,6 +174,9 @@ class CartController extends RestController {
 
             return
         }
+
+        // Store Log Entry
+        new Log(relatedTable: 'cart', relatedElement: request.JSON.cartId, details: 'A new product (#' + item.id + ') was added on this cart, with amount of: ' + item.amount).save()
 
         item.save flush: true
 
@@ -347,6 +356,9 @@ class CartController extends RestController {
         cart.items.toArray().each {
             it -> items.add([productId: it.productId, amount: it.amount])
         }
+
+        // Store Log Entry
+        new Log(relatedTable: 'cart', relatedElement: cart.id, details: 'Customer ' + cart.customer + ' did checkout of his cart with a final price of USD ' + finalPrice).save()
 
         cart.delete flush: true
 
