@@ -1,7 +1,7 @@
 ![](http://imgur.com/t3teAxi.png)
 ### :handbag: A simple RESTful API for Purchases and Products
 
-[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Github All Releases](https://img.shields.io/github/downloads/sant0ro/ecommerce/total.svg)]() [![GitHub release](https://img.shields.io/github/release/sant0ro/ecommerce.svg)]() [![Build Status](https://travis-ci.org/sant0ro/ecommerce.svg?branch=master)](https://travis-ci.org/sant0ro/ecommerce) [![Codecov](https://img.shields.io/codecov/c/github/sant0ro/ecommerce.svg)]() [![Docker Pulls](https://img.shields.io/docker/pulls/sant0ro/products-api.svg)]() [![Docker Pulls](https://img.shields.io/docker/pulls/sant0ro/purchase-api.svg)]()
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Github All Releases](https://img.shields.io/github/downloads/ovflowd/ecommerce/total.svg)]() [![GitHub release](https://img.shields.io/github/release/ovflowd/ecommerce.svg)]() [![Build Status](https://travis-ci.org/ovflowd/ecommerce.svg?branch=master)](https://travis-ci.org/ovflowd/ecommerce) [![Codecov](https://img.shields.io/codecov/c/github/ovflowd/ecommerce.svg)]() [![Docker Pulls](https://img.shields.io/docker/pulls/sant0ro/products-api.svg)]() [![Docker Pulls](https://img.shields.io/docker/pulls/sant0ro/purchase-api.svg)]()
 
 ## Deploy
 
